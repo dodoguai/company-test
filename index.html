@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人员与印章状态管理系统</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: #1e293b;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 布局工具类 */
+        .hidden {
+            display: none !important;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+        
+        .flex-row {
+            flex-direction: row;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .items-end {
+            align-items: flex-end;
+        }
+        
+        .flex-grow {
+            flex-grow: 1;
+        }
+        
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        
+        .gap-3 {
+            gap: 12px;
+        }
+        
+        .gap-4 {
+            gap: 16px;
+        }
+        
+        .gap-5 {
+            gap: 20px;
+        }
+        
+        .mt-1 {
+            margin-top: 4px;
+        }
+        
+        .mt-3 {
+            margin-top: 12px;
+        }
+        
+        .mt-4 {
+            margin-top: 16px;
+        }
+        
+        .mt-6 {
+            margin-top: 24px;
+        }
+        
+        .mt-8 {
+            margin-top: 32px;
+        }
+        
+        .mt-10 {
+            margin-top: 40px;
+        }
+        
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+        
+        .mb-6 {
+            margin-bottom: 24px;
+        }
+        
+        .mb-8 {
+            margin-bottom: 32px;
+        }
+        
+        .mb-10 {
+            margin-bottom: 40px;
+        }
+        
+        .ml-4 {
+            margin-left: 16px;
+        }
+        
+        .mr-1 {
+            margin-right: 4px;
+        }
+        
+        .mr-2 {
+            margin-right: 8px;
+        }
+        
+        .p-2 {
+            padding: 8px;
+        }
+        
+        .p-3 {
+            padding: 12px;
+        }
+        
+        .p-4 {
+            padding: 16px;
+        }
+        
+        .p-5 {
+            padding: 20px;
+        }
+        
+        .p-6 {
+            padding: 24px;
+        }
+        
+        .px-3 {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        
+        .px-4 {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        
+        .px-5 {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        .py-1 {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+        
+        .py-2 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        
+        .py-6 {
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .w-full {
+            width: 100%;
+        }
+        
+        .max-w-md {
+            max-width: 28rem;
+        }
+        
+        .max-w-lg {
+            max-width: 32rem;
+        }
+        
+        .max-h-60 {
+            max-height: 240px;
+        }
+        
+        /* 网格布局 - 确保卡片正确排列 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        /* 颜色定义 */
+        .bg-primary {
+            background-color: #3b82f6;
+        }
+        
+        .bg-primary-light {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .bg-primary-hover {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .bg-secondary {
+            background-color: #6366f1;
+        }
+        
+        .bg-success {
+            background-color: #10b981;
+        }
+        
+        .bg-success-light {
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        
+        .bg-danger {
+            background-color: #ef4444;
+        }
+        
+        .bg-danger-light {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+        
+        .bg-dark {
+            background-color: #1e293b;
+        }
+        
+        .bg-white {
+            background-color: white;
+        }
+        
+        .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+        
+        .bg-gray-100 {
+            background-color: #f3f4f6;
+        }
+        
+        .bg-gray-200 {
+            background-color: #e5e7eb;
+        }
+        
+        .bg-gray-700 {
+            background-color: #374151;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .text-primary {
+            color: #3b82f6;
+        }
+        
+        .text-success {
+            color: #10b981;
+        }
+        
+        .text-danger {
+            color: #ef4444;
+        }
+        
+        .text-gray-300 {
+            color: #d1d5db;
+        }
+        
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        
+        .text-gray-500 {
+            color: #6b7280;
+        }
+        
+        .text-gray-700 {
+            color: #374151;
+        }
+        
+        .text-gray-800 {
+            color: #1f2937;
+        }
+        
+        .border {
+            border-width: 1px;
+            border-style: solid;
+        }
+        
+        .border-success {
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        
+        .border-danger {
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+        
+        .border-t-4 {
+            border-top-width: 4px;
+            border-top-style: solid;
+        }
+        
+        .border-b {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #e5e7eb;
+        }
+        
+        /* 组件样式 */
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, #3b82f6, #6366f1);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .status-pill {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-align: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .status-pill.present {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .status-pill.absent {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 12px;
+            height: 12px;
+            border-radius: 9999px;
+        }
+        
+        .update-info {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 12px;
+            text-align: center;
+            display: none;
+        }
+        
+        .update-info.visible {
+            display: block;
+        }
+        
+        .login-card {
+            max-width: 28rem;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-backdrop.active {
+            opacity: 1;
+            display: flex;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 32rem;
+            transform: scale(0.95) translateY(16px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-backdrop.active .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(59, 130, 246, 0.9);
+        }
+        
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: rgba(239, 68, 68, 0.9);
+        }
+        
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        
+        /* 文本样式 */
+        .text-xs {
+            font-size: 0.75rem;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .text-base {
+            font-size: 1rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        /* 动画 */
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 其他样式 */
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .rounded-xl {
+            border-radius: 0.75rem;
+        }
+        
+        .rounded-2xl {
+            border-radius: 1rem;
+        }
+        
+        .rounded-full {
+            border-radius: 9999px;
+        }
+        
+        .rounded-b-xl {
+            border-bottom-right-radius: 0.75rem;
+            border-bottom-left-radius: 0.75rem;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .overflow-y-auto {
+            overflow-y: auto;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .absolute {
+            position: absolute;
+        }
+        
+        .fixed {
+            position: fixed;
+        }
+        
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .z-50 {
+            z-index: 50;
+        }
+        
+        .z-100 {
+            z-index: 100;
+        }
+        
+        .z-500 {
+            z-index: 500;
+        }
+        
+        .h-full {
+            height: 100%;
+        }
+        
+        .hover\\:bg-primary-90:hover {
+            background-color: rgba(59, 130, 246, 0.9);
+        }
+        
+        .hover\\:bg-danger-90:hover {
+            background-color: rgba(239, 68, 68, 0.9);
+        }
+        
+        .hover\\:bg-gray-600:hover {
+            background-color: #4b5563;
+        }
+        
+        .hover\\:bg-gray-300:hover {
+            background-color: #d1d5db;
+        }
+        
+        .hover\\:text-danger-80:hover {
+            color: rgba(239, 68, 68, 0.8);
+        }
+        
+        .focus\\:ring-2:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        
+        .focus\\:border-primary:focus {
+            border-color: #3b82f6;
+        }
+        
+        .transition {
+            transition: all 0.2s ease;
+        }
+        
+        .transition-colors {
+            transition: background-color 0.2s ease;
+        }
+        
+        .transition-all {
+            transition: all 0.2s ease;
+        }
+    </style>
+    <!-- 引入Font Awesome确保图标正常显示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 加载状态指示器 -->
+    <div id="loading-indicator" class="fixed inset-0 z-500 flex items-center justify-center bg-white">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="mt-4 text-gray-600">系统加载中...</p>
+        </div>
+    </div>
+
+    <!-- 登录界面 (默认显示) -->
+    <div id="login-screen" class="fixed inset-0 bg-gradient-to-br from-primary to-secondary flex items-center justify-center z-50 p-4">
+        <div class="login-card w-full">
+            <div class="bg-dark p-6 text-center">
+                <h2 class="text-2xl font-bold text-white">人员与印章状态管理系统</h2>
+                <p class="text-gray-300 mt-1">请登录后访问系统</p>
+            </div>
+            <div class="p-6">
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+                        <input type="text" id="username" name="username" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                        <input type="password" id="password" name="password" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="admin-login" name="login-type" value="admin" class="mr-2">
+                        <label for="admin-login" class="text-sm text-gray-700">管理员登录</label>
+                        <input type="radio" id="visitor-login" name="login-type" value="visitor" checked class="ml-4 mr-2">
+                        <label for="visitor-login" class="text-sm text-gray-700">访客登录</label>
+                    </div>
+                    <div class="text-red-500 text-sm hidden" id="login-error">
+                        用户名或密码错误，请重试
+                    </div>
+                    <button type="submit" 
+                        class="w-full bg-primary hover:bg-primary-90 text-white py-2 px-4 rounded-lg transition-colors font-medium">
+                        登录
+                    </button>
+                </form>
+                <div class="mt-4 text-sm text-gray-500">
+                    <p>管理员示例账号: ld / 19990519</p>
+                    <p>访客示例账号: visitor1 / 123456</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主系统界面 (默认隐藏) -->
+    <div id="system-screen" class="hidden">
+        <header class="bg-dark text-white shadow-md">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold">人员与印章状态</h1>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex items-center gap-4">
+                        <div class="text-sm text-gray-300">
+                            <i class="fa fa-clock-o mr-1"></i>
+                            <span id="current-date">2023年6月15日</span>
+                        </div>
+                        <div class="text-sm text-gray-300">
+                            <i class="fa fa-user mr-1"></i>
+                            <span id="current-user">访客</span>
+                        </div>
+                        <div class="text-sm text-gray-300">
+                            <i class="fa fa-refresh mr-1"></i>
+                            <span id="last-update">最后更新: 14:30</span>
+                        </div>
+                        <div id="admin-controls">
+                            <button id="visitor-management-btn" class="bg-primary-light hover:bg-primary-hover text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                                <i class="fa fa-users mr-1"></i> 访客管理
+                            </button>
+                        </div>
+                        <button id="logout-btn" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                            <i class="fa fa-sign-out mr-1"></i> 退出
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex gap-3 mt-4 md:mt-0">
+                    <button id="refresh-btn" class="bg-primary hover:bg-primary-90 text-white px-5 py-2 rounded-lg transition-all duration-300 flex items-center shadow-md hover:shadow-lg">
+                        <i class="fa fa-refresh mr-2"></i> 刷新
+                    </button>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">公司领导状态</h3>
+            <!-- 使用新的卡片网格布局 -->
+            <div class="card-grid mb-10">
+                <!-- 领导状态卡片 1 -->
+                <div class="card relative h-full flex flex-col">
+                    <div class="card-header relative">
+                        <h3 class="font-bold">王董</h3>
+                        <p class="text-blue-100 text-sm">董事长</p>
+                        <span class="status-indicator bg-success"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center">
+                        <div class="status-pill present w-full leader-status" data-id="leader1" data-type="leader">
+                            <i class="fa fa-check-circle mr-1"></i> 在岗
+                        </div>
+                        <div class="update-info leader-update-info" data-id="leader1">
+                            <div>更新于: 2023-06-15 09:30</div>
+                            <div>更新人: <span class="font-medium">ld</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 领导状态卡片 2 -->
+                <div class="card relative h-full flex flex-col">
+                    <div class="card-header relative">
+                        <h3 class="font-bold">张总</h3>
+                        <p class="text-blue-100 text-sm">总经理</p>
+                        <span class="status-indicator bg-success"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center">
+                        <div class="status-pill present w-full leader-status" data-id="leader2" data-type="leader">
+                            <i class="fa fa-check-circle mr-1"></i> 在岗
+                        </div>
+                        <div class="update-info leader-update-info" data-id="leader2">
+                            <div>更新于: 2023-06-15 08:15</div>
+                            <div>更新人: <span class="font-medium">jyf</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 领导状态卡片 3 -->
+                <div class="card relative h-full flex flex-col">
+                    <div class="card-header relative">
+                        <h3 class="font-bold">周副总</h3>
+                        <p class="text-blue-100 text-sm">副总经理</p>
+                        <span class="status-indicator bg-danger"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center">
+                        <div class="status-pill absent w-full leader-status" data-id="leader3" data-type="leader">
+                            <i class="fa fa-sign-out mr-1"></i> 外出
+                        </div>
+                        <div class="update-info leader-update-info" data-id="leader3">
+                            <div>更新于: 2023-06-15 10:45</div>
+                            <div>更新人: <span class="font-medium">visitor1</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 领导状态卡片 4 -->
+                <div class="card relative h-full flex flex-col">
+                    <div class="card-header relative">
+                        <h3 class="font-bold">吴副总</h3>
+                        <p class="text-blue-100 text-sm">副总经理</p>
+                        <span class="status-indicator bg-success"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center">
+                        <div class="status-pill present w-full leader-status" data-id="leader4" data-type="leader">
+                            <i class="fa fa-check-circle mr-1"></i> 在岗
+                        </div>
+                        <div class="update-info leader-update-info" data-id="leader4">
+                            <div>更新于: 2023-06-15 09:00</div>
+                            <div>更新人: <span class="font-medium">ld</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 领导状态卡片 5 -->
+                <div class="card relative h-full flex flex-col">
+                    <div class="card-header relative">
+                        <h3 class="font-bold">曹副总</h3>
+                        <p class="text-blue-100 text-sm">副总经理</p>
+                        <span class="status-indicator bg-success"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center">
+                        <div class="status-pill present w-full leader-status" data-id="leader5" data-type="leader">
+                            <i class="fa fa-check-circle mr-1"></i> 在岗
+                        </div>
+                        <div class="update-info leader-update-info" data-id="leader5">
+                            <div>更新于: 2023-06-15 09:15</div>
+                            <div>更新人: <span class="font-medium">jyf</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 领导状态卡片 6 -->
+                <div class="card relative h-full flex flex-col">
+                    <div class="card-header relative">
+                        <h3 class="font-bold">张副总</h3>
+                        <p class="text-blue-100 text-sm">办公室主任</p>
+                        <span class="status-indicator bg-danger"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center">
+                        <div class="status-pill absent w-full leader-status" data-id="leader6" data-type="leader">
+                            <i class="fa fa-sign-out mr-1"></i> 外出
+                        </div>
+                        <div class="update-info leader-update-info" data-id="leader6">
+                            <div>更新于: 2023-06-15 10:00</div>
+                            <div>更新人: <span class="font-medium">ld</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">公司印章状态</h3>
+            <!-- 使用新的卡片网格布局 -->
+            <div class="card-grid">
+                <!-- 印章状态卡片 1 - 嘉亭 -->
+                <div class="card border-t-4 border-success relative h-full flex flex-col">
+                    <div class="p-6 flex-grow flex flex-col justify-center">
+                        <div class="text-center mb-4">
+                            <h3 class="font-bold text-lg">嘉亭印章</h3>
+                            <p class="text-gray-500 text-sm">行政部管理</p>
+                        </div>
+                        <div class="status-pill present w-full seal-status" data-id="seal1" data-type="seal">
+                            <i class="fa fa-lock mr-1"></i> 在库
+                        </div>
+                        <div class="update-info seal-update-info" data-id="seal1">
+                            <div>更新于: 2023-06-15 09:30</div>
+                            <div>更新人: <span class="font-medium">jyf</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 印章状态卡片 2 - 新青洋 -->
+                <div class="card border-t-4 border-danger relative h-full flex flex-col">
+                    <div class="p-6 flex-grow flex flex-col justify-center">
+                        <div class="text-center mb-4">
+                            <h3 class="font-bold text-lg">新青洋印章</h3>
+                            <p class="text-gray-500 text-sm">业务部管理</p>
+                        </div>
+                        <div class="status-pill absent w-full seal-status" data-id="seal2" data-type="seal">
+                            <i class="fa fa-unlock mr-1"></i> 借出
+                        </div>
+                        <div class="update-info seal-update-info" data-id="seal2">
+                            <div>更新于: 2023-06-15 10:15</div>
+                            <div>更新人: <span class="font-medium">visitor1</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 印章状态卡片 3 - 亭发 -->
+                <div class="card border-t-4 border-success relative h-full flex flex-col">
+                    <div class="p-6 flex-grow flex flex-col justify-center">
+                        <div class="text-center mb-4">
+                            <h3 class="font-bold text-lg">亭发印章</h3>
+                            <p class="text-gray-500 text-sm">财务部管理</p>
+                        </div>
+                        <div class="status-pill present w-full seal-status" data-id="seal3" data-type="seal">
+                            <i class="fa fa-lock mr-1"></i> 在库
+                        </div>
+                        <div class="update-info seal-update-info" data-id="seal3">
+                            <div>更新于: 2023-06-15 08:45</div>
+                            <div>更新人: <span class="font-medium">ld</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-dark text-white py-6 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="text-center text-gray-400 text-sm">
+                    <p>© 2023 公司资产管理系统 | 设计与开发</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 访客管理模态框 -->
+    <div id="visitor-management-modal" class="modal-backdrop">
+        <div class="modal">
+            <div class="p-6 border-b">
+                <h3 class="text-xl font-bold text-gray-800">访客管理</h3>
+            </div>
+            <div class="p-6">
+                <form id="add-visitor-form" class="mb-6">
+                    <div class="flex gap-4">
+                        <div class="flex-1">
+                            <label for="new-username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+                            <input type="text" id="new-username" name="new-username" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                        </div>
+                        <div class="flex-1">
+                            <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                            <input type="password" id="new-password" name="new-password" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-plus mr-1"></i> 添加
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <h4 class="font-medium text-gray-800 mb-3">现有访客</h4>
+                <div id="visitors-list" class="space-y-2 max-h-60 overflow-y-auto pr-2">
+                    <!-- 访客列表将通过JS动态生成 -->
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50 flex justify-end gap-3 rounded-b-xl">
+                <button id="close-visitor-modal-btn" class="btn btn-secondary">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化系统数据
+        const initSystemData = () => {
+            // 检查是否已有数据，没有则初始化
+            if (!localStorage.getItem('admins')) {
+                // 预设管理员账户
+                const admins = {
+                    'ld': '19990519',
+                    'jyf': 'jyf123456'
+                };
+                localStorage.setItem('admins', JSON.stringify(admins));
+            }
+            
+            if (!localStorage.getItem('visitors')) {
+                // 预设访客账户
+                const visitors = {
+                    'visitor1': '123456',
+                    'visitor2': '654321'
+                };
+                localStorage.setItem('visitors', JSON.stringify(visitors));
+            }
+            
+            if (!localStorage.getItem('leaders')) {
+                // 领导数据 - 恢复为6位领导
+                const leaders = {
+                    leader1: { 
+                        status: 'present', 
+                        name: '王董', 
+                        updateTime: '2023-06-15 09:30',
+                        updatedBy: 'ld'
+                    },
+                    leader2: { 
+                        status: 'present', 
+                        name: '张总', 
+                        updateTime: '2023-06-15 08:15',
+                        updatedBy: 'jyf'
+                    },
+                    leader3: { 
+                        status: 'absent', 
+                        name: '周副总', 
+                        updateTime: '2023-06-15 10:45',
+                        updatedBy: 'visitor1'
+                    },
+                    leader4: { 
+                        status: 'present', 
+                        name: '吴副总', 
+                        updateTime: '2023-06-15 09:00',
+                        updatedBy: 'ld'
+                    },
+                    leader5: { 
+                        status: 'present', 
+                        name: '曹副总', 
+                        updateTime: '2023-06-15 09:15',
+                        updatedBy: 'jyf'
+                    },
+                    leader6: { 
+                        status: 'absent', 
+                        name: '张副总', 
+                        updateTime: '2023-06-15 10:00',
+                        updatedBy: 'ld'
+                    }
+                };
+                localStorage.setItem('leaders', JSON.stringify(leaders));
+            }
+            
+            if (!localStorage.getItem('seals')) {
+                // 印章数据 - 更新为指定名称
+                const seals = {
+                    seal1: { 
+                        status: 'present', 
+                        name: '嘉亭印章', 
+                        updateTime: '2023-06-15 09:30',
+                        updatedBy: 'jyf'
+                    },
+                    seal2: { 
+                        status: 'absent', 
+                        name: '新青洋印章', 
+                        updateTime: '2023-06-15 10:15',
+                        updatedBy: 'visitor1'
+                    },
+                    seal3: { 
+                        status: 'present', 
+                        name: '亭发印章', 
+                        updateTime: '2023-06-15 08:45',
+                        updatedBy: 'ld'
+                    }
+                };
+                localStorage.setItem('seals', JSON.stringify(seals));
+            }
+        };
+        
+        // 加载数据
+        const loadData = () => {
+            return {
+                admins: JSON.parse(localStorage.getItem('admins') || '{}'),
+                visitors: JSON.parse(localStorage.getItem('visitors') || '{}'),
+                leaders: JSON.parse(localStorage.getItem('leaders') || '{}'),
+                seals: JSON.parse(localStorage.getItem('seals') || '{}'),
+                currentUser: localStorage.getItem('currentUser') || null,
+                userRole: localStorage.getItem('userRole') || null
+            };
+        };
+        
+        // 保存数据
+        const saveData = (data) => {
+            if (data.admins) localStorage.setItem('admins', JSON.stringify(data.admins));
+            if (data.visitors) localStorage.setItem('visitors', JSON.stringify(data.visitors));
+            if (data.leaders) localStorage.setItem('leaders', JSON.stringify(data.leaders));
+            if (data.seals) localStorage.setItem('seals', JSON.stringify(data.seals));
+            if (data.currentUser !== undefined) {
+                if (data.currentUser) {
+                    localStorage.setItem('currentUser', data.currentUser);
+                } else {
+                    localStorage.removeItem('currentUser');
+                }
+            }
+            if (data.userRole !== undefined) {
+                if (data.userRole) {
+                    localStorage.setItem('userRole', data.userRole);
+                } else {
+                    localStorage.removeItem('userRole');
+                }
+            }
+        };
+
+        // 全局状态管理
+        let state = {
+            ...loadData()
+        };
+
+        // DOM 元素
+        const loginScreen = document.getElementById('login-screen');
+        const systemScreen = document.getElementById('system-screen');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const logoutBtn = document.getElementById('logout-btn');
+        const currentUserEl = document.getElementById('current-user');
+        const adminControls = document.getElementById('admin-controls');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const visitorManagementBtn = document.getElementById('visitor-management-btn');
+        const visitorManagementModal = document.getElementById('visitor-management-modal');
+        const closeVisitorModalBtn = document.getElementById('close-visitor-modal-btn');
+        const addVisitorForm = document.getElementById('add-visitor-form');
+        const visitorsList = document.getElementById('visitors-list');
+        const statusElements = document.querySelectorAll('.status-pill');
+
+        // 检查用户是否已登录
+        const checkLoginStatus = () => {
+            // 强制初始状态：如果没有登录记录，只显示登录界面
+            if (!state.currentUser || !state.userRole) {
+                loginScreen.classList.remove('hidden');
+                systemScreen.classList.add('hidden');
+                return;
+            }
+            
+            // 已登录，显示系统界面
+            loginScreen.classList.add('hidden');
+            systemScreen.classList.remove('hidden');
+            initSystemUI();
+        };
+
+        // 初始化系统UI
+        const initSystemUI = () => {
+            currentUserEl.textContent = state.currentUser;
+            
+            // 管理员权限控制
+            if (state.userRole === 'admin') {
+                adminControls.classList.remove('hidden');
+                renderVisitorsList();
+                // 绑定访客管理事件
+                bindVisitorManagementEvents();
+            } else {
+                adminControls.classList.add('hidden');
+            }
+            
+            updateAllStatusUI();
+            setCurrentDate();
+            updateLastModifiedTime();
+        };
+
+        // 绑定访客管理相关事件
+        const bindVisitorManagementEvents = () => {
+            if (visitorManagementBtn) {
+                visitorManagementBtn.addEventListener('click', openVisitorModal);
+            }
+            
+            if (closeVisitorModalBtn) {
+                closeVisitorModalBtn.addEventListener('click', closeVisitorModal);
+            }
+        };
+
+        // 打开访客管理模态框
+        const openVisitorModal = () => {
+            if (visitorManagementModal) {
+                visitorManagementModal.classList.add('active');
+            }
+        };
+
+        // 关闭访客管理模态框
+        const closeVisitorModal = () => {
+            if (visitorManagementModal) {
+                visitorManagementModal.classList.remove('active');
+            }
+        };
+
+        // 设置当前日期
+        const setCurrentDate = () => {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('zh-CN', options);
+        };
+
+        // 更新最后修改时间
+        const updateLastModifiedTime = () => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('last-update').textContent = `最后更新: ${timeString}`;
+        };
+
+        // 更新单个项目的更新信息
+        const updateItemUpdateInfo = (itemId, itemType) => {
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+            const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            const dateTimeStr = `${dateStr} ${timeStr}`;
+            
+            const collection = itemType === 'leader' ? state.leaders : state.seals;
+            if (!collection[itemId]) return;
+            
+            collection[itemId].updateTime = dateTimeStr;
+            collection[itemId].updatedBy = state.currentUser;
+            
+            const infoElement = document.querySelector(`.${itemType}-update-info[data-id="${itemId}"]`);
+            if (infoElement) {
+                infoElement.innerHTML = `
+                    <div>更新于: ${dateTimeStr}</div>
+                    <div>更新人: <span class="font-medium">${state.currentUser}</span></div>
+                `;
+                infoElement.classList.add('visible');
+            }
+        };
+
+        // 登录处理
+        const handleLogin = (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginType = document.querySelector('input[name="login-type"]:checked').value;
+
+            if (loginType === 'admin') {
+                if (state.admins[username] && state.admins[username] === password) {
+                    state.currentUser = username;
+                    state.userRole = 'admin';
+                    saveData(state);
+                    checkLoginStatus();
+                    loginForm.reset();
+                    return;
+                }
+            } else {
+                if (state.visitors[username] && state.visitors[username] === password) {
+                    state.currentUser = username;
+                    state.userRole = 'visitor';
+                    saveData(state);
+                    checkLoginStatus();
+                    loginForm.reset();
+                    return;
+                }
+            }
+            
+            loginError.classList.remove('hidden');
+            setTimeout(() => {
+                loginError.classList.add('hidden');
+            }, 3000);
+        };
+
+        // 登出处理
+        const handleLogout = () => {
+            if (confirm('确定要退出登录吗？')) {
+                state.currentUser = null;
+                state.userRole = null;
+                saveData(state);
+                checkLoginStatus();
+            }
+        };
+
+        // 切换状态处理
+        const toggleStatus = (e) => {
+            const itemId = e.currentTarget.getAttribute('data-id');
+            const itemType = e.currentTarget.getAttribute('data-type');
+            
+            const collection = itemType === 'leader' ? state.leaders : state.seals;
+            if (!collection[itemId]) return;
+            
+            const currentStatus = collection[itemId].status;
+            const newStatus = currentStatus === 'present' ? 'absent' : 'present';
+            
+            collection[itemId].status = newStatus;
+            
+            const statusElement = e.currentTarget;
+            const cardElement = statusElement.closest('.card');
+            const indicatorElement = cardElement.querySelector('.status-indicator');
+            
+            statusElement.classList.remove(currentStatus);
+            statusElement.classList.add(newStatus);
+            
+            if (itemType === 'leader') {
+                if (newStatus === 'present') {
+                    statusElement.innerHTML = '<i class="fa fa-check-circle mr-1"></i> 在岗';
+                    indicatorElement.className = 'status-indicator bg-success';
+                } else {
+                    statusElement.innerHTML = '<i class="fa fa-sign-out mr-1"></i> 外出';
+                    indicatorElement.className = 'status-indicator bg-danger';
+                }
+            } else {
+                if (newStatus === 'present') {
+                    statusElement.innerHTML = '<i class="fa fa-lock mr-1"></i> 在库';
+                    cardElement.className = cardElement.className.replace(/border-t-4 border-\w+/, 'border-t-4 border-success');
+                } else {
+                    statusElement.innerHTML = '<i class="fa fa-unlock mr-1"></i> 借出';
+                    cardElement.className = cardElement.className.replace(/border-t-4 border-\w+/, 'border-t-4 border-danger');
+                }
+            }
+            
+            updateItemUpdateInfo(itemId, itemType);
+            saveData(state);
+            updateLastModifiedTime();
+        };
+
+        // 刷新状态
+        const refreshStatus = () => {
+            const originalContent = refreshBtn.innerHTML;
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 刷新中...';
+            
+            setTimeout(() => {
+                state = { ...loadData() };
+                updateAllStatusUI();
+                updateLastModifiedTime();
+                
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = originalContent;
+            }, 800);
+        };
+        
+        // 更新所有状态UI
+        const updateAllStatusUI = () => {
+            // 更新领导状态
+            Object.keys(state.leaders).forEach(id => {
+                const leader = state.leaders[id];
+                const statusElement = document.querySelector(`.leader-status[data-id="${id}"]`);
+                const infoElement = document.querySelector(`.leader-update-info[data-id="${id}"]`);
+                
+                if (statusElement && infoElement) {
+                    statusElement.classList.remove('present', 'absent');
+                    statusElement.classList.add(leader.status);
+                    
+                    if (leader.status === 'present') {
+                        statusElement.innerHTML = '<i class="fa fa-check-circle mr-1"></i> 在岗';
+                        statusElement.closest('.card').querySelector('.status-indicator').className = 'status-indicator bg-success';
+                    } else {
+                        statusElement.innerHTML = '<i class="fa fa-sign-out mr-1"></i> 外出';
+                        statusElement.closest('.card').querySelector('.status-indicator').className = 'status-indicator bg-danger';
+                    }
+                    
+                    if (leader.updateTime && leader.updatedBy) {
+                        infoElement.innerHTML = `
+                            <div>更新于: ${leader.updateTime}</div>
+                            <div>更新人: <span class="font-medium">${leader.updatedBy}</span></div>
+                        `;
+                        infoElement.classList.add('visible');
+                    } else {
+                        infoElement.classList.remove('visible');
+                    }
+                }
+            });
+            
+            // 更新印章状态
+            Object.keys(state.seals).forEach(id => {
+                const seal = state.seals[id];
+                const statusElement = document.querySelector(`.seal-status[data-id="${id}"]`);
+                const infoElement = document.querySelector(`.seal-update-info[data-id="${id}"]`);
+                
+                if (statusElement && infoElement) {
+                    statusElement.classList.remove('present', 'absent');
+                    statusElement.classList.add(seal.status);
+                    
+                    if (seal.status === 'present') {
+                        statusElement.innerHTML = '<i class="fa fa-lock mr-1"></i> 在库';
+                        statusElement.closest('.card').className = statusElement.closest('.card').className.replace(/border-t-4 border-\w+/, 'border-t-4 border-success');
+                    } else {
+                        statusElement.innerHTML = '<i class="fa fa-unlock mr-1"></i> 借出';
+                        statusElement.closest('.card').className = statusElement.closest('.card').className.replace(/border-t-4 border-\w+/, 'border-t-4 border-danger');
+                    }
+                    
+                    if (seal.updateTime && seal.updatedBy) {
+                        infoElement.innerHTML = `
+                            <div>更新于: ${seal.updateTime}</div>
+                            <div>更新人: <span class="font-medium">${seal.updatedBy}</span></div>
+                        `;
+                        infoElement.classList.add('visible');
+                    } else {
+                        infoElement.classList.remove('visible');
+                    }
+                }
+            });
+        };
+
+        // 渲染访客列表
+        const renderVisitorsList = () => {
+            visitorsList.innerHTML = '';
+            
+            if (Object.keys(state.visitors).length === 0) {
+                visitorsList.innerHTML = '<div class="text-gray-500 text-center py-3">暂无访客</div>';
+                return;
+            }
+            
+            Object.keys(state.visitors).forEach(username => {
+                const visitorEl = document.createElement('div');
+                visitorEl.className = 'flex justify-between items-center p-2 bg-gray-50 rounded-lg';
+                visitorEl.innerHTML = `
+                    <span class="font-medium">${username}</span>
+                    <button class="delete-visitor-btn text-danger hover:text-danger-80" data-username="${username}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                `;
+                visitorsList.appendChild(visitorEl);
+            });
+            
+            // 绑定删除访客事件
+            document.querySelectorAll('.delete-visitor-btn').forEach(btn => {
+                btn.addEventListener('click', handleDeleteVisitor);
+            });
+        };
+
+        // 添加访客
+        const handleAddVisitor = (e) => {
+            e.preventDefault();
+            const username = document.getElementById('new-username').value.trim();
+            const password = document.getElementById('new-password').value;
+            
+            if (!username || !password) return;
+            
+            if (state.visitors[username] || state.admins[username]) {
+                alert('用户名已存在，请使用其他用户名');
+                return;
+            }
+            
+            state.visitors[username] = password;
+            saveData({ visitors: state.visitors });
+            renderVisitorsList();
+            addVisitorForm.reset();
+        };
+
+        // 删除访客
+        const handleDeleteVisitor = (e) => {
+            const username = e.currentTarget.getAttribute('data-username');
+            
+            if (confirm(`确定要删除访客 ${username} 吗？`)) {
+                delete state.visitors[username];
+                saveData({ visitors: state.visitors });
+                renderVisitorsList();
+            }
+        };
+
+        // 绑定所有事件监听
+        const bindEvents = () => {
+            // 登录表单提交
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+            
+            // 登出按钮
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+            
+            // 状态切换
+            statusElements.forEach(elem => {
+                elem.addEventListener('click', toggleStatus);
+            });
+            
+            // 刷新按钮
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', refreshStatus);
+            }
+            
+            // 添加访客表单
+            if (addVisitorForm) {
+                addVisitorForm.addEventListener('submit', handleAddVisitor);
+            }
+            
+            // 点击模态框背景关闭
+            if (visitorManagementModal) {
+                visitorManagementModal.addEventListener('click', (e) => {
+                    if (e.target === visitorManagementModal) {
+                        closeVisitorModal();
+                    }
+                });
+            }
+        };
+
+        // 初始化系统
+        const init = () => {
+            initSystemData();
+            // 确保初始状态正确 - 登录界面显示，系统界面隐藏
+            loginScreen.classList.remove('hidden');
+            systemScreen.classList.add('hidden');
+            checkLoginStatus();
+            bindEvents();
+        };
+
+        // 页面DOM加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // 确保加载完成后隐藏加载指示器，只显示登录界面
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading-indicator').classList.add('hidden');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
+    
