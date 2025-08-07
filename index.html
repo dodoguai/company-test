@@ -392,7 +392,7 @@
             color: #6b7280;
             margin-top: 12px;
             text-align: center;
-            display: none;
+            display: block; /* 修改为默认显示 */
         }
         
         .update-info.visible {
@@ -651,7 +651,7 @@
     </style>
     <!-- 引入Font Awesome图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- 关键修复：引入包含LiveQuery的LeanCloud SDK -->
+    <!-- 引入包含LiveQuery的LeanCloud SDK -->
     <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.0/dist/av-live-query.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -827,19 +827,22 @@
                 if (results.length > 0) {
                     return JSON.parse(results[0].get('data') || '{}');
                 } else {
-                    // 初始化默认数据
+                    // 初始化默认数据 - 已更新人员和印章信息
                     const defaultData = {
                         admins: { 'ld': '19990519', 'jyf': 'jyf123456' },
                         visitors: { 'visitor1': '123456', 'visitor2': '654321' },
                         leaders: {
-                            'leader1': { name: '王董', position: '董事长', status: 'present', updatedAt: new Date().toLocaleString() },
-                            'leader2': { name: '李总', position: '总经理', status: 'absent', updatedAt: new Date().toLocaleString() },
-                            'leader3': { name: '张副总', position: '副总经理', status: 'present', updatedAt: new Date().toLocaleString() }
+                            'leader1': { name: '王董', position: '董事长', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'leader2': { name: '张总经理', position: '总经理', status: 'absent', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'leader3': { name: '周副总', position: '副总经理', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'leader4': { name: '吴副总', position: '副总经理', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'leader5': { name: '曹副总', position: '副总经理', status: 'absent', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'leader6': { name: '张副总', position: '副总经理', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' }
                         },
                         seals: {
-                            'seal1': { name: '公章', status: 'present', updatedAt: new Date().toLocaleString() },
-                            'seal2': { name: '合同章', status: 'absent', updatedAt: new Date().toLocaleString() },
-                            'seal3': { name: '财务章', status: 'present', updatedAt: new Date().toLocaleString() }
+                            'seal1': { name: '嘉亭', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'seal2': { name: '新青洋', status: 'absent', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
+                            'seal3': { name: '亭发', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' }
                         },
                         currentUser: null,
                         userRole: null
@@ -922,7 +925,7 @@
             document.getElementById('last-update').textContent = `最后更新: ${new Date().toLocaleTimeString()}`;
         };
 
-        // 渲染领导卡片
+        // 渲染领导卡片 - 已修改状态文字并添加更新人和时间
         const renderLeaders = () => {
             const container = document.getElementById('leaders-container');
             container.innerHTML = '';
@@ -940,11 +943,12 @@
                     <div class="p-5 flex-grow flex flex-col justify-between">
                         <div class="mt-2">
                             <div class="status-pill ${leader.status}" data-id="${id}" data-type="leader">
-                                ${leader.status === 'present' ? '在岗' : '离岗'}
+                                ${leader.status === 'present' ? '在岗' : '外出'}
                             </div>
                         </div>
-                        <div class="update-info visible">
-                            最后更新: ${leader.updatedAt || '未知'}
+                        <div class="update-info mt-2">
+                            <p>更新人: ${leader.updatedBy || '未知'}</p>
+                            <p>更新时间: ${leader.updatedAt || '未知'}</p>
                         </div>
                     </div>
                 `;
@@ -957,7 +961,7 @@
             });
         };
 
-        // 渲染印章卡片
+        // 渲染印章卡片 - 已修改名称、状态文字并添加更新人和时间
         const renderSeals = () => {
             const container = document.getElementById('seals-container');
             container.innerHTML = '';
@@ -975,11 +979,12 @@
                     <div class="p-5 flex-grow flex flex-col justify-between">
                         <div class="mt-2">
                             <div class="status-pill ${seal.status}" data-id="${id}" data-type="seal">
-                                ${seal.status === 'present' ? '在库' : '出库'}
+                                ${seal.status === 'present' ? '在库' : '外带'}
                             </div>
                         </div>
-                        <div class="update-info visible">
-                            最后更新: ${seal.updatedAt || '未知'}
+                        <div class="update-info mt-2">
+                            <p>更新人: ${seal.updatedBy || '未知'}</p>
+                            <p>更新时间: ${seal.updatedAt || '未知'}</p>
                         </div>
                     </div>
                 `;
@@ -1015,34 +1020,36 @@
             });
         };
 
-        // 切换领导状态
+        // 切换领导状态 - 记录更新人
         const toggleLeaderStatus = async (e) => {
             const id = e.currentTarget.dataset.id;
             const currentStatus = state.leaders[id].status;
             const newStatus = currentStatus === 'present' ? 'absent' : 'present';
             
-            // 更新本地状态
+            // 更新本地状态，记录当前操作用户
             state.leaders[id] = {
                 ...state.leaders[id],
                 status: newStatus,
-                updatedAt: new Date().toLocaleString()
+                updatedAt: new Date().toLocaleString(),
+                updatedBy: state.currentUser || '未知用户'
             };
             
             // 保存到云端
             await saveData({ leaders: state.leaders });
         };
 
-        // 切换印章状态
+        // 切换印章状态 - 记录更新人
         const toggleSealStatus = async (e) => {
             const id = e.currentTarget.dataset.id;
             const currentStatus = state.seals[id].status;
             const newStatus = currentStatus === 'present' ? 'absent' : 'present';
             
-            // 更新本地状态
+            // 更新本地状态，记录当前操作用户
             state.seals[id] = {
                 ...state.seals[id],
                 status: newStatus,
-                updatedAt: new Date().toLocaleString()
+                updatedAt: new Date().toLocaleString(),
+                updatedBy: state.currentUser || '未知用户'
             };
             
             // 保存到云端
@@ -1137,7 +1144,7 @@
                 const cloudData = await loadData();
                 state = { ...state, ...cloudData };
                 
-                // 初始化LiveQuery（替换原来的watchDataChanges）
+                // 初始化LiveQuery
                 initLiveQuery();
                 
                 // 初始化日期显示
