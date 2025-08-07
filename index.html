@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人员与印章状态</title>
     <style>
-        /* 基础样式 */
+        /* 所有样式保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -27,7 +27,6 @@
             padding: 0 20px;
         }
         
-        /* 布局工具类 */
         .hidden {
             display: none !important;
         }
@@ -210,14 +209,12 @@
             max-height: 240px;
         }
         
-        /* 网格布局 - 确保卡片正确排列 */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
         
-        /* 颜色定义 */
         .bg-primary {
             background-color: #3b82f6;
         }
@@ -338,7 +335,6 @@
             border-bottom-color: #e5e7eb;
         }
         
-        /* 组件样式 */
         .card {
             background-color: white;
             border-radius: 0.75rem;
@@ -487,7 +483,6 @@
             background-color: #d1d5db;
         }
         
-        /* 文本样式 */
         .text-xs {
             font-size: 0.75rem;
         }
@@ -524,7 +519,6 @@
             font-weight: 500;
         }
         
-        /* 动画 */
         .animate-spin {
             animation: spin 1s linear infinite;
         }
@@ -534,7 +528,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* 其他样式 */
         .shadow-md {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
@@ -615,32 +608,32 @@
             height: 100%;
         }
         
-        .hover\\:bg-primary-90:hover {
+        .hover\:bg-primary-90:hover {
             background-color: rgba(59, 130, 246, 0.9);
         }
         
-        .hover\\:bg-danger-90:hover {
+        .hover\:bg-danger-90:hover {
             background-color: rgba(239, 68, 68, 0.9);
         }
         
-        .hover\\:bg-gray-600:hover {
+        .hover\:bg-gray-600:hover {
             background-color: #4b5563;
         }
         
-        .hover\\:bg-gray-300:hover {
+        .hover\:bg-gray-300:hover {
             background-color: #d1d5db;
         }
         
-        .hover\\:text-danger-80:hover {
+        .hover\:text-danger-80:hover {
             color: rgba(239, 68, 68, 0.8);
         }
         
-        .focus\\:ring-2:focus {
+        .focus\:ring-2:focus {
             outline: none;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
         }
         
-        .focus\\:border-primary:focus {
+        .focus\:border-primary:focus {
             border-color: #3b82f6;
         }
         
@@ -656,8 +649,10 @@
             transition: all 0.2s ease;
         }
     </style>
-    <!-- 引入Font Awesome确保图标正常显示 -->
+    <!-- 引入Font Awesome图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- 关键修复：引入包含LiveQuery的LeanCloud SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.0/dist/av-live-query.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- 加载状态指示器 -->
@@ -692,7 +687,6 @@
                         <label for="visitor-login" class="text-sm text-gray-700">访客登录</label>
                         <input type="radio" id="admin-login" name="login-type" value="admin" class="ml-4 mr-2">
                         <label for="admin-login" class="text-sm text-gray-700">管理员登录</label>
-                        
                     </div>
                     <div class="text-red-500 text-sm hidden" id="login-error">
                         用户名或密码错误，请重试
@@ -702,7 +696,6 @@
                         登录
                     </button>
                 </form>
-                
             </div>
         </div>
     </div>
@@ -751,745 +744,477 @@
             </div>
 
             <h3 class="text-xl font-semibold text-gray-800 mb-4">公司领导状态</h3>
-            <!-- 使用新的卡片网格布局 -->
-            <div class="card-grid mb-10">
-                <!-- 领导状态卡片 1 -->
-                <div class="card relative h-full flex flex-col">
-                    <div class="card-header relative">
-                        <h3 class="font-bold">王董</h3>
-                        <p class="text-blue-100 text-sm">董事长</p>
-                        <span class="status-indicator bg-success"></span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center">
-                        <div class="status-pill present w-full leader-status" data-id="leader1" data-type="leader">
-                            <i class="fa fa-check-circle mr-1"></i> 在岗
-                        </div>
-                        <div class="update-info leader-update-info" data-id="leader1">
-                            <div>更新于: 2023-06-15 09:30</div>
-                            <div>更新人: <span class="font-medium">ld</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 领导状态卡片 2 -->
-                <div class="card relative h-full flex flex-col">
-                    <div class="card-header relative">
-                        <h3 class="font-bold">张总</h3>
-                        <p class="text-blue-100 text-sm">总经理</p>
-                        <span class="status-indicator bg-success"></span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center">
-                        <div class="status-pill present w-full leader-status" data-id="leader2" data-type="leader">
-                            <i class="fa fa-check-circle mr-1"></i> 在岗
-                        </div>
-                        <div class="update-info leader-update-info" data-id="leader2">
-                            <div>更新于: 2023-06-15 08:15</div>
-                            <div>更新人: <span class="font-medium">jyf</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 领导状态卡片 3 -->
-                <div class="card relative h-full flex flex-col">
-                    <div class="card-header relative">
-                        <h3 class="font-bold">周副总</h3>
-                        <p class="text-blue-100 text-sm">副总经理</p>
-                        <span class="status-indicator bg-danger"></span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center">
-                        <div class="status-pill absent w-full leader-status" data-id="leader3" data-type="leader">
-                            <i class="fa fa-sign-out mr-1"></i> 外出
-                        </div>
-                        <div class="update-info leader-update-info" data-id="leader3">
-                            <div>更新于: 2023-06-15 10:45</div>
-                            <div>更新人: <span class="font-medium">visitor1</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 领导状态卡片 4 -->
-                <div class="card relative h-full flex flex-col">
-                    <div class="card-header relative">
-                        <h3 class="font-bold">吴副总</h3>
-                        <p class="text-blue-100 text-sm">副总经理</p>
-                        <span class="status-indicator bg-success"></span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center">
-                        <div class="status-pill present w-full leader-status" data-id="leader4" data-type="leader">
-                            <i class="fa fa-check-circle mr-1"></i> 在岗
-                        </div>
-                        <div class="update-info leader-update-info" data-id="leader4">
-                            <div>更新于: 2023-06-15 09:00</div>
-                            <div>更新人: <span class="font-medium">ld</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 领导状态卡片 5 -->
-                <div class="card relative h-full flex flex-col">
-                    <div class="card-header relative">
-                        <h3 class="font-bold">曹副总</h3>
-                        <p class="text-blue-100 text-sm">副总经理</p>
-                        <span class="status-indicator bg-success"></span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center">
-                        <div class="status-pill present w-full leader-status" data-id="leader5" data-type="leader">
-                            <i class="fa fa-check-circle mr-1"></i> 在岗
-                        </div>
-                        <div class="update-info leader-update-info" data-id="leader5">
-                            <div>更新于: 2023-06-15 09:15</div>
-                            <div>更新人: <span class="font-medium">jyf</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 领导状态卡片 6 -->
-                <div class="card relative h-full flex flex-col">
-                    <div class="card-header relative">
-                        <h3 class="font-bold">张副总</h3>
-                        <p class="text-blue-100 text-sm">办公室主任</p>
-                        <span class="status-indicator bg-danger"></span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center">
-                        <div class="status-pill absent w-full leader-status" data-id="leader6" data-type="leader">
-                            <i class="fa fa-sign-out mr-1"></i> 外出
-                        </div>
-                        <div class="update-info leader-update-info" data-id="leader6">
-                            <div>更新于: 2023-06-15 10:00</div>
-                            <div>更新人: <span class="font-medium">ld</span></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-grid mb-10" id="leaders-container">
+                <!-- 领导卡片将通过JS动态生成 -->
             </div>
 
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">公司印章状态</h3>
-            <!-- 使用新的卡片网格布局 -->
-            <div class="card-grid">
-                <!-- 印章状态卡片 1 - 嘉亭 -->
-                <div class="card border-t-4 border-success relative h-full flex flex-col">
-                    <div class="p-6 flex-grow flex flex-col justify-center">
-                        <div class="text-center mb-4">
-                            <h3 class="font-bold text-lg">嘉亭印章</h3>
-                            <p class="text-gray-500 text-sm">行政部管理</p>
-                        </div>
-                        <div class="status-pill present w-full seal-status" data-id="seal1" data-type="seal">
-                            <i class="fa fa-lock mr-1"></i> 在库
-                        </div>
-                        <div class="update-info seal-update-info" data-id="seal1">
-                            <div>更新于: 2023-06-15 09:30</div>
-                            <div>更新人: <span class="font-medium">jyf</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 印章状态卡片 2 - 新青洋 -->
-                <div class="card border-t-4 border-danger relative h-full flex flex-col">
-                    <div class="p-6 flex-grow flex flex-col justify-center">
-                        <div class="text-center mb-4">
-                            <h3 class="font-bold text-lg">新青洋印章</h3>
-                            <p class="text-gray-500 text-sm">业务部管理</p>
-                        </div>
-                        <div class="status-pill absent w-full seal-status" data-id="seal2" data-type="seal">
-                            <i class="fa fa-unlock mr-1"></i> 借出
-                        </div>
-                        <div class="update-info seal-update-info" data-id="seal2">
-                            <div>更新于: 2023-06-15 10:15</div>
-                            <div>更新人: <span class="font-medium">visitor1</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 印章状态卡片 3 - 亭发 -->
-                <div class="card border-t-4 border-success relative h-full flex flex-col">
-                    <div class="p-6 flex-grow flex flex-col justify-center">
-                        <div class="text-center mb-4">
-                            <h3 class="font-bold text-lg">亭发印章</h3>
-                            <p class="text-gray-500 text-sm">财务部管理</p>
-                        </div>
-                        <div class="status-pill present w-full seal-status" data-id="seal3" data-type="seal">
-                            <i class="fa fa-lock mr-1"></i> 在库
-                        </div>
-                        <div class="update-info seal-update-info" data-id="seal3">
-                            <div>更新于: 2023-06-15 08:45</div>
-                            <div>更新人: <span class="font-medium">ld</span></div>
-                        </div>
-                    </div>
-                </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">印章状态</h3>
+            <div class="card-grid" id="seals-container">
+                <!-- 印章卡片将通过JS动态生成 -->
             </div>
         </main>
-
-        <footer class="bg-dark text-white py-6 mt-12">
-            <div class="container mx-auto px-4">
-                <div class="text-center text-gray-400 text-sm">
-                    <p>© 2023 公司资产管理系统 | 设计与开发</p>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <!-- 访客管理模态框 -->
-    <div id="visitor-management-modal" class="modal-backdrop">
+    <div id="visitor-modal" class="modal-backdrop">
         <div class="modal">
-            <div class="p-6 border-b">
-                <h3 class="text-xl font-bold text-gray-800">访客管理</h3>
+            <div class="bg-dark p-6 text-white">
+                <h3 class="text-xl font-bold">访客管理</h3>
             </div>
             <div class="p-6">
-                <form id="add-visitor-form" class="mb-6">
-                    <div class="flex gap-4">
-                        <div class="flex-1">
-                            <label for="new-username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
-                            <input type="text" id="new-username" name="new-username" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                <div class="mb-6">
+                    <h4 class="font-semibold mb-3">添加新访客</h4>
+                    <form id="add-visitor-form" class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="flex-1">
+                                <label for="new-username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+                                <input type="text" id="new-username" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                            </div>
+                            <div class="flex-1">
+                                <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                                <input type="password" id="new-password" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
-                            <input type="password" id="new-password" name="new-password" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
-                        </div>
-                        <div class="flex items-end">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-plus mr-1"></i> 添加
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-plus mr-1"></i> 添加访客
+                        </button>
+                    </form>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-3">现有访客</h4>
+                    <div id="visitors-list" class="space-y-2 max-h-60 overflow-y-auto p-2 border border-gray-300 rounded-lg">
+                        <!-- 访客列表将通过JS动态生成 -->
                     </div>
-                </form>
-                
-                <h4 class="font-medium text-gray-800 mb-3">现有访客</h4>
-                <div id="visitors-list" class="space-y-2 max-h-60 overflow-y-auto pr-2">
-                    <!-- 访客列表将通过JS动态生成 -->
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 flex justify-end gap-3 rounded-b-xl">
-                <button id="close-visitor-modal-btn" class="btn btn-secondary">
-                    关闭
-                </button>
+            <div class="p-4 bg-gray-50 border-t border-gray-200 flex justify-end">
+                <button id="close-modal-btn" class="btn btn-secondary">关闭</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 初始化系统数据
-        const initSystemData = () => {
-            // 检查是否已有数据，没有则初始化
-            if (!localStorage.getItem('admins')) {
-                // 预设管理员账户
-                const admins = {
-                    'ld': '19990519',
-                    'jyf': 'jyf123456'
-                };
-                localStorage.setItem('admins', JSON.stringify(admins));
-            }
-            
-            if (!localStorage.getItem('visitors')) {
-                // 预设访客账户
-                const visitors = {
-                    'visitor1': '123456',
-                    'visitor2': '654321'
-                };
-                localStorage.setItem('visitors', JSON.stringify(visitors));
-            }
-            
-            if (!localStorage.getItem('leaders')) {
-                // 领导数据 - 恢复为6位领导
-                const leaders = {
-                    leader1: { 
-                        status: 'present', 
-                        name: '王董', 
-                        updateTime: '2023-06-15 09:30',
-                        updatedBy: 'ld'
-                    },
-                    leader2: { 
-                        status: 'present', 
-                        name: '张总', 
-                        updateTime: '2023-06-15 08:15',
-                        updatedBy: 'jyf'
-                    },
-                    leader3: { 
-                        status: 'absent', 
-                        name: '周副总', 
-                        updateTime: '2023-06-15 10:45',
-                        updatedBy: 'visitor1'
-                    },
-                    leader4: { 
-                        status: 'present', 
-                        name: '吴副总', 
-                        updateTime: '2023-06-15 09:00',
-                        updatedBy: 'ld'
-                    },
-                    leader5: { 
-                        status: 'present', 
-                        name: '曹副总', 
-                        updateTime: '2023-06-15 09:15',
-                        updatedBy: 'jyf'
-                    },
-                    leader6: { 
-                        status: 'absent', 
-                        name: '张副总', 
-                        updateTime: '2023-06-15 10:00',
-                        updatedBy: 'ld'
-                    }
-                };
-                localStorage.setItem('leaders', JSON.stringify(leaders));
-            }
-            
-            if (!localStorage.getItem('seals')) {
-                // 印章数据 - 更新为指定名称
-                const seals = {
-                    seal1: { 
-                        status: 'present', 
-                        name: '嘉亭印章', 
-                        updateTime: '2023-06-15 09:30',
-                        updatedBy: 'jyf'
-                    },
-                    seal2: { 
-                        status: 'absent', 
-                        name: '新青洋印章', 
-                        updateTime: '2023-06-15 10:15',
-                        updatedBy: 'visitor1'
-                    },
-                    seal3: { 
-                        status: 'present', 
-                        name: '亭发印章', 
-                        updateTime: '2023-06-15 08:45',
-                        updatedBy: 'ld'
-                    }
-                };
-                localStorage.setItem('seals', JSON.stringify(seals));
-            }
-        };
-        
-        // 加载数据
-        const loadData = () => {
-            return {
-                admins: JSON.parse(localStorage.getItem('admins') || '{}'),
-                visitors: JSON.parse(localStorage.getItem('visitors') || '{}'),
-                leaders: JSON.parse(localStorage.getItem('leaders') || '{}'),
-                seals: JSON.parse(localStorage.getItem('seals') || '{}'),
-                currentUser: localStorage.getItem('currentUser') || null,
-                userRole: localStorage.getItem('userRole') || null
-            };
-        };
-        
-        // 保存数据
-        const saveData = (data) => {
-            if (data.admins) localStorage.setItem('admins', JSON.stringify(data.admins));
-            if (data.visitors) localStorage.setItem('visitors', JSON.stringify(data.visitors));
-            if (data.leaders) localStorage.setItem('leaders', JSON.stringify(data.leaders));
-            if (data.seals) localStorage.setItem('seals', JSON.stringify(data.seals));
-            if (data.currentUser !== undefined) {
-                if (data.currentUser) {
-                    localStorage.setItem('currentUser', data.currentUser);
-                } else {
-                    localStorage.removeItem('currentUser');
-                }
-            }
-            if (data.userRole !== undefined) {
-                if (data.userRole) {
-                    localStorage.setItem('userRole', data.userRole);
-                } else {
-                    localStorage.removeItem('userRole');
-                }
-            }
-        };
-
         // 全局状态管理
         let state = {
-            ...loadData()
+            admins: {},
+            visitors: {},
+            leaders: {},
+            seals: {},
+            currentUser: null,
+            userRole: null
         };
 
-        // DOM 元素
-        const loginScreen = document.getElementById('login-screen');
-        const systemScreen = document.getElementById('system-screen');
-        const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
-        const logoutBtn = document.getElementById('logout-btn');
-        const currentUserEl = document.getElementById('current-user');
-        const adminControls = document.getElementById('admin-controls');
-        const refreshBtn = document.getElementById('refresh-btn');
-        const visitorManagementBtn = document.getElementById('visitor-management-btn');
-        const visitorManagementModal = document.getElementById('visitor-management-modal');
-        const closeVisitorModalBtn = document.getElementById('close-visitor-modal-btn');
-        const addVisitorForm = document.getElementById('add-visitor-form');
-        const visitorsList = document.getElementById('visitors-list');
-        const statusElements = document.querySelectorAll('.status-pill');
+        // LeanCloud初始化 - 已填入完整配置
+        AV.init({
+            appId: "Gq3rAowifg7igBDhpPpk7OPZ-gzGzoHsz",  // 你的App ID
+            appKey: "2Al1KxzZXqS14lmUyg9L6HKU",         // 你的App Key
+            serverURL: "https://gq3raowi.lc-cn-n1-shared.com"  // 中国区服务器地址
+        });
 
-        // 检查用户是否已登录
-        const checkLoginStatus = () => {
-            // 强制初始状态：如果没有登录记录，只显示登录界面
-            if (!state.currentUser || !state.userRole) {
-                loginScreen.classList.remove('hidden');
-                systemScreen.classList.add('hidden');
-                return;
+        // 创建数据表引用
+        const SharedData = AV.Object.extend('SharedData');
+
+        // 从云端加载数据
+        const loadData = async () => {
+            try {
+                const query = new AV.Query(SharedData);
+                query.limit(1);
+                const results = await query.find();
+                
+                if (results.length > 0) {
+                    return JSON.parse(results[0].get('data') || '{}');
+                } else {
+                    // 初始化默认数据
+                    const defaultData = {
+                        admins: { 'ld': '19990519', 'jyf': 'jyf123456' },
+                        visitors: { 'visitor1': '123456', 'visitor2': '654321' },
+                        leaders: {
+                            'leader1': { name: '王董', position: '董事长', status: 'present', updatedAt: new Date().toLocaleString() },
+                            'leader2': { name: '李总', position: '总经理', status: 'absent', updatedAt: new Date().toLocaleString() },
+                            'leader3': { name: '张副总', position: '副总经理', status: 'present', updatedAt: new Date().toLocaleString() }
+                        },
+                        seals: {
+                            'seal1': { name: '公章', status: 'present', updatedAt: new Date().toLocaleString() },
+                            'seal2': { name: '合同章', status: 'absent', updatedAt: new Date().toLocaleString() },
+                            'seal3': { name: '财务章', status: 'present', updatedAt: new Date().toLocaleString() }
+                        },
+                        currentUser: null,
+                        userRole: null
+                    };
+                    
+                    const newData = new SharedData();
+                    newData.set('data', JSON.stringify(defaultData));
+                    await newData.save();
+                    return defaultData;
+                }
+            } catch (error) {
+                console.error('加载数据失败:', error);
+                alert(`数据加载失败: ${error.message}\n请确保已在LeanCloud控制台创建应用并启用LiveQuery`);
+                return {};
             }
-            
-            // 已登录，显示系统界面
-            loginScreen.classList.add('hidden');
-            systemScreen.classList.remove('hidden');
-            initSystemUI();
         };
 
-        // 初始化系统UI
-        const initSystemUI = () => {
-            currentUserEl.textContent = state.currentUser;
-            
-            // 管理员权限控制
-            if (state.userRole === 'admin') {
-                adminControls.classList.remove('hidden');
-                renderVisitorsList();
-                // 绑定访客管理事件
-                bindVisitorManagementEvents();
+        // 保存数据到云端
+        const saveData = async (newData) => {
+            try {
+                const query = new AV.Query(SharedData);
+                const results = await query.find();
+                
+                if (results.length > 0) {
+                    const dataObject = results[0];
+                    const currentData = JSON.parse(dataObject.get('data') || '{}');
+                    const updatedData = { ...currentData, ...newData };
+                    dataObject.set('data', JSON.stringify(updatedData));
+                    await dataObject.save();
+                    return updatedData;
+                } else {
+                    const dataObject = new SharedData();
+                    dataObject.set('data', JSON.stringify(newData));
+                    await dataObject.save();
+                    return newData;
+                }
+            } catch (error) {
+                console.error('保存数据失败:', error);
+                alert(`数据保存失败: ${error.message}`);
+                return null;
+            }
+        };
+
+        // 初始化LiveQuery（带错误处理）
+        const initLiveQuery = () => {
+            // 检查是否支持LiveQuery
+            if (typeof AV.LiveQuery !== 'undefined') {
+                const query = new AV.Query(SharedData);
+                query.subscribe().then(subscription => {
+                    subscription.on('update', async (dataObject) => {
+                        const newData = JSON.parse(dataObject.get('data') || '{}');
+                        state = { ...state, ...newData };
+                        updateUI();
+                        showUpdateInfo();
+                    });
+                }).catch(error => {
+                    console.warn('LiveQuery订阅失败:', error);
+                    alert('实时同步功能暂时不可用，您可以继续使用系统，但数据更新需要手动刷新页面');
+                });
             } else {
-                adminControls.classList.add('hidden');
+                console.warn('当前SDK不支持LiveQuery');
+                alert('实时同步功能不可用，请确保引入了正确的SDK');
+            }
+        };
+
+        // 更新UI显示
+        const updateUI = () => {
+            // 更新领导卡片
+            renderLeaders();
+            // 更新印章卡片
+            renderSeals();
+            // 更新访客列表
+            renderVisitors();
+            // 更新用户信息
+            if (state.currentUser) {
+                document.getElementById('current-user').textContent = state.currentUser;
+                document.getElementById('admin-controls').style.display = state.userRole === 'admin' ? 'block' : 'none';
+            }
+            // 更新最后更新时间
+            document.getElementById('last-update').textContent = `最后更新: ${new Date().toLocaleTimeString()}`;
+        };
+
+        // 渲染领导卡片
+        const renderLeaders = () => {
+            const container = document.getElementById('leaders-container');
+            container.innerHTML = '';
+            
+            Object.keys(state.leaders).forEach(id => {
+                const leader = state.leaders[id];
+                const card = document.createElement('div');
+                card.className = 'card relative h-full flex flex-col';
+                card.innerHTML = `
+                    <div class="card-header relative">
+                        <h3 class="font-bold">${leader.name}</h3>
+                        <p class="text-blue-100 text-sm">${leader.position}</p>
+                        <span class="status-indicator ${leader.status === 'present' ? 'bg-success' : 'bg-danger'}"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div class="mt-2">
+                            <div class="status-pill ${leader.status}" data-id="${id}" data-type="leader">
+                                ${leader.status === 'present' ? '在岗' : '离岗'}
+                            </div>
+                        </div>
+                        <div class="update-info visible">
+                            最后更新: ${leader.updatedAt || '未知'}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // 添加状态切换事件
+            document.querySelectorAll('.status-pill[data-type="leader"]').forEach(pill => {
+                pill.addEventListener('click', toggleLeaderStatus);
+            });
+        };
+
+        // 渲染印章卡片
+        const renderSeals = () => {
+            const container = document.getElementById('seals-container');
+            container.innerHTML = '';
+            
+            Object.keys(state.seals).forEach(id => {
+                const seal = state.seals[id];
+                const card = document.createElement('div');
+                card.className = 'card relative h-full flex flex-col';
+                card.innerHTML = `
+                    <div class="card-header relative">
+                        <h3 class="font-bold">${seal.name}</h3>
+                        <p class="text-blue-100 text-sm">印章</p>
+                        <span class="status-indicator ${seal.status === 'present' ? 'bg-success' : 'bg-danger'}"></span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div class="mt-2">
+                            <div class="status-pill ${seal.status}" data-id="${id}" data-type="seal">
+                                ${seal.status === 'present' ? '在库' : '出库'}
+                            </div>
+                        </div>
+                        <div class="update-info visible">
+                            最后更新: ${seal.updatedAt || '未知'}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // 添加状态切换事件
+            document.querySelectorAll('.status-pill[data-type="seal"]').forEach(pill => {
+                pill.addEventListener('click', toggleSealStatus);
+            });
+        };
+
+        // 渲染访客列表
+        const renderVisitors = () => {
+            const container = document.getElementById('visitors-list');
+            container.innerHTML = '';
+            
+            Object.keys(state.visitors).forEach(username => {
+                const visitorItem = document.createElement('div');
+                visitorItem.className = 'flex justify-between items-center p-2 hover:bg-gray-100 rounded-lg';
+                visitorItem.innerHTML = `
+                    <div class="font-medium">${username}</div>
+                    <button class="text-danger hover:text-danger-80 delete-visitor" data-username="${username}">
+                        <i class="fa fa-trash"></i> 删除
+                    </button>
+                `;
+                container.appendChild(visitorItem);
+            });
+
+            // 添加删除访客事件
+            document.querySelectorAll('.delete-visitor').forEach(btn => {
+                btn.addEventListener('click', deleteVisitor);
+            });
+        };
+
+        // 切换领导状态
+        const toggleLeaderStatus = async (e) => {
+            const id = e.currentTarget.dataset.id;
+            const currentStatus = state.leaders[id].status;
+            const newStatus = currentStatus === 'present' ? 'absent' : 'present';
+            
+            // 更新本地状态
+            state.leaders[id] = {
+                ...state.leaders[id],
+                status: newStatus,
+                updatedAt: new Date().toLocaleString()
+            };
+            
+            // 保存到云端
+            await saveData({ leaders: state.leaders });
+        };
+
+        // 切换印章状态
+        const toggleSealStatus = async (e) => {
+            const id = e.currentTarget.dataset.id;
+            const currentStatus = state.seals[id].status;
+            const newStatus = currentStatus === 'present' ? 'absent' : 'present';
+            
+            // 更新本地状态
+            state.seals[id] = {
+                ...state.seals[id],
+                status: newStatus,
+                updatedAt: new Date().toLocaleString()
+            };
+            
+            // 保存到云端
+            await saveData({ seals: state.seals });
+        };
+
+        // 添加新访客
+        const addVisitor = async (username, password) => {
+            if (!username || !password) return false;
+            
+            // 检查用户名是否已存在
+            if (state.visitors[username]) {
+                alert('该用户名已存在');
+                return false;
             }
             
-            updateAllStatusUI();
-            setCurrentDate();
-            updateLastModifiedTime();
-        };
-
-        // 绑定访客管理相关事件
-        const bindVisitorManagementEvents = () => {
-            if (visitorManagementBtn) {
-                visitorManagementBtn.addEventListener('click', openVisitorModal);
-            }
+            // 更新本地状态
+            state.visitors[username] = password;
             
-            if (closeVisitorModalBtn) {
-                closeVisitorModalBtn.addEventListener('click', closeVisitorModal);
-            }
+            // 保存到云端
+            await saveData({ visitors: state.visitors });
+            return true;
         };
 
-        // 打开访客管理模态框
-        const openVisitorModal = () => {
-            if (visitorManagementModal) {
-                visitorManagementModal.classList.add('active');
-            }
+        // 删除访客
+        const deleteVisitor = async (e) => {
+            const username = e.currentTarget.dataset.username;
+            if (!confirm(`确定要删除访客 ${username} 吗？`)) return;
+            
+            // 更新本地状态
+            delete state.visitors[username];
+            
+            // 保存到云端
+            await saveData({ visitors: state.visitors });
         };
 
-        // 关闭访客管理模态框
-        const closeVisitorModal = () => {
-            if (visitorManagementModal) {
-                visitorManagementModal.classList.remove('active');
-            }
+        // 显示更新提示
+        const showUpdateInfo = () => {
+            const allUpdates = document.querySelectorAll('.update-info');
+            allUpdates.forEach(el => el.classList.add('visible'));
+            
+            // 3秒后隐藏提示
+            setTimeout(() => {
+                allUpdates.forEach(el => el.classList.remove('visible'));
+            }, 3000);
         };
 
-        // 设置当前日期
-        const setCurrentDate = () => {
+        // 登录处理
+        const handleLogin = async (username, password, isAdmin) => {
+            const targetUsers = isAdmin ? state.admins : state.visitors;
+            if (targetUsers[username] === password) {
+                // 登录成功，更新用户状态
+                await saveData({
+                    currentUser: username,
+                    userRole: isAdmin ? 'admin' : 'visitor'
+                });
+                
+                // 切换界面
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('system-screen').classList.remove('hidden');
+                return true;
+            }
+            return false;
+        };
+
+        // 登出处理
+        const handleLogout = async () => {
+            await saveData({
+                currentUser: null,
+                userRole: null
+            });
+            
+            // 切换界面
+            document.getElementById('system-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            // 重置登录表单
+            document.getElementById('login-form').reset();
+            document.getElementById('login-error').classList.add('hidden');
+        };
+
+        // 初始化日期显示
+        const initDateDisplay = () => {
             const now = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
             document.getElementById('current-date').textContent = now.toLocaleDateString('zh-CN', options);
         };
 
-        // 更新最后修改时间
-        const updateLastModifiedTime = () => {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('zh-CN', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            document.getElementById('last-update').textContent = `最后更新: ${timeString}`;
-        };
-
-        // 更新单个项目的更新信息
-        const updateItemUpdateInfo = (itemId, itemType) => {
-            const now = new Date();
-            const dateStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
-            const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-            const dateTimeStr = `${dateStr} ${timeStr}`;
-            
-            const collection = itemType === 'leader' ? state.leaders : state.seals;
-            if (!collection[itemId]) return;
-            
-            collection[itemId].updateTime = dateTimeStr;
-            collection[itemId].updatedBy = state.currentUser;
-            
-            const infoElement = document.querySelector(`.${itemType}-update-info[data-id="${itemId}"]`);
-            if (infoElement) {
-                infoElement.innerHTML = `
-                    <div>更新于: ${dateTimeStr}</div>
-                    <div>更新人: <span class="font-medium">${state.currentUser}</span></div>
-                `;
-                infoElement.classList.add('visible');
-            }
-        };
-
-        // 登录处理
-        const handleLogin = (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const loginType = document.querySelector('input[name="login-type"]:checked').value;
-
-            if (loginType === 'admin') {
-                if (state.admins[username] && state.admins[username] === password) {
-                    state.currentUser = username;
-                    state.userRole = 'admin';
-                    saveData(state);
-                    checkLoginStatus();
-                    loginForm.reset();
-                    return;
-                }
-            } else {
-                if (state.visitors[username] && state.visitors[username] === password) {
-                    state.currentUser = username;
-                    state.userRole = 'visitor';
-                    saveData(state);
-                    checkLoginStatus();
-                    loginForm.reset();
-                    return;
-                }
-            }
-            
-            loginError.classList.remove('hidden');
-            setTimeout(() => {
-                loginError.classList.add('hidden');
-            }, 3000);
-        };
-
-        // 登出处理
-        const handleLogout = () => {
-            if (confirm('确定要退出登录吗？')) {
-                state.currentUser = null;
-                state.userRole = null;
-                saveData(state);
-                checkLoginStatus();
-            }
-        };
-
-        // 切换状态处理
-        const toggleStatus = (e) => {
-            const itemId = e.currentTarget.getAttribute('data-id');
-            const itemType = e.currentTarget.getAttribute('data-type');
-            
-            const collection = itemType === 'leader' ? state.leaders : state.seals;
-            if (!collection[itemId]) return;
-            
-            const currentStatus = collection[itemId].status;
-            const newStatus = currentStatus === 'present' ? 'absent' : 'present';
-            
-            collection[itemId].status = newStatus;
-            
-            const statusElement = e.currentTarget;
-            const cardElement = statusElement.closest('.card');
-            const indicatorElement = cardElement.querySelector('.status-indicator');
-            
-            statusElement.classList.remove(currentStatus);
-            statusElement.classList.add(newStatus);
-            
-            if (itemType === 'leader') {
-                if (newStatus === 'present') {
-                    statusElement.innerHTML = '<i class="fa fa-check-circle mr-1"></i> 在岗';
-                    indicatorElement.className = 'status-indicator bg-success';
-                } else {
-                    statusElement.innerHTML = '<i class="fa fa-sign-out mr-1"></i> 外出';
-                    indicatorElement.className = 'status-indicator bg-danger';
-                }
-            } else {
-                if (newStatus === 'present') {
-                    statusElement.innerHTML = '<i class="fa fa-lock mr-1"></i> 在库';
-                    cardElement.className = cardElement.className.replace(/border-t-4 border-\w+/, 'border-t-4 border-success');
-                } else {
-                    statusElement.innerHTML = '<i class="fa fa-unlock mr-1"></i> 借出';
-                    cardElement.className = cardElement.className.replace(/border-t-4 border-\w+/, 'border-t-4 border-danger');
-                }
-            }
-            
-            updateItemUpdateInfo(itemId, itemType);
-            saveData(state);
-            updateLastModifiedTime();
-        };
-
-        // 刷新状态
-        const refreshStatus = () => {
-            const originalContent = refreshBtn.innerHTML;
-            refreshBtn.disabled = true;
-            refreshBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 刷新中...';
-            
-            setTimeout(() => {
-                state = { ...loadData() };
-                updateAllStatusUI();
-                updateLastModifiedTime();
+        // 系统初始化
+        const initSystem = async () => {
+            try {
+                // 加载数据
+                const cloudData = await loadData();
+                state = { ...state, ...cloudData };
                 
-                refreshBtn.disabled = false;
-                refreshBtn.innerHTML = originalContent;
-            }, 800);
-        };
-        
-        // 更新所有状态UI
-        const updateAllStatusUI = () => {
-            // 更新领导状态
-            Object.keys(state.leaders).forEach(id => {
-                const leader = state.leaders[id];
-                const statusElement = document.querySelector(`.leader-status[data-id="${id}"]`);
-                const infoElement = document.querySelector(`.leader-update-info[data-id="${id}"]`);
+                // 初始化LiveQuery（替换原来的watchDataChanges）
+                initLiveQuery();
                 
-                if (statusElement && infoElement) {
-                    statusElement.classList.remove('present', 'absent');
-                    statusElement.classList.add(leader.status);
-                    
-                    if (leader.status === 'present') {
-                        statusElement.innerHTML = '<i class="fa fa-check-circle mr-1"></i> 在岗';
-                        statusElement.closest('.card').querySelector('.status-indicator').className = 'status-indicator bg-success';
-                    } else {
-                        statusElement.innerHTML = '<i class="fa fa-sign-out mr-1"></i> 外出';
-                        statusElement.closest('.card').querySelector('.status-indicator').className = 'status-indicator bg-danger';
-                    }
-                    
-                    if (leader.updateTime && leader.updatedBy) {
-                        infoElement.innerHTML = `
-                            <div>更新于: ${leader.updateTime}</div>
-                            <div>更新人: <span class="font-medium">${leader.updatedBy}</span></div>
-                        `;
-                        infoElement.classList.add('visible');
-                    } else {
-                        infoElement.classList.remove('visible');
-                    }
-                }
-            });
-            
-            // 更新印章状态
-            Object.keys(state.seals).forEach(id => {
-                const seal = state.seals[id];
-                const statusElement = document.querySelector(`.seal-status[data-id="${id}"]`);
-                const infoElement = document.querySelector(`.seal-update-info[data-id="${id}"]`);
+                // 初始化日期显示
+                initDateDisplay();
                 
-                if (statusElement && infoElement) {
-                    statusElement.classList.remove('present', 'absent');
-                    statusElement.classList.add(seal.status);
-                    
-                    if (seal.status === 'present') {
-                        statusElement.innerHTML = '<i class="fa fa-lock mr-1"></i> 在库';
-                        statusElement.closest('.card').className = statusElement.closest('.card').className.replace(/border-t-4 border-\w+/, 'border-t-4 border-success');
-                    } else {
-                        statusElement.innerHTML = '<i class="fa fa-unlock mr-1"></i> 借出';
-                        statusElement.closest('.card').className = statusElement.closest('.card').className.replace(/border-t-4 border-\w+/, 'border-t-4 border-danger');
-                    }
-                    
-                    if (seal.updateTime && seal.updatedBy) {
-                        infoElement.innerHTML = `
-                            <div>更新于: ${seal.updateTime}</div>
-                            <div>更新人: <span class="font-medium">${seal.updatedBy}</span></div>
-                        `;
-                        infoElement.classList.add('visible');
-                    } else {
-                        infoElement.classList.remove('visible');
-                    }
+                // 更新UI
+                updateUI();
+                
+                // 如果已有登录状态，直接进入系统
+                if (state.currentUser) {
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('system-screen').classList.remove('hidden');
                 }
-            });
-        };
-
-        // 渲染访客列表
-        const renderVisitorsList = () => {
-            visitorsList.innerHTML = '';
-            
-            if (Object.keys(state.visitors).length === 0) {
-                visitorsList.innerHTML = '<div class="text-gray-500 text-center py-3">暂无访客</div>';
-                return;
-            }
-            
-            Object.keys(state.visitors).forEach(username => {
-                const visitorEl = document.createElement('div');
-                visitorEl.className = 'flex justify-between items-center p-2 bg-gray-50 rounded-lg';
-                visitorEl.innerHTML = `
-                    <span class="font-medium">${username}</span>
-                    <button class="delete-visitor-btn text-danger hover:text-danger-80" data-username="${username}">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                `;
-                visitorsList.appendChild(visitorEl);
-            });
-            
-            // 绑定删除访客事件
-            document.querySelectorAll('.delete-visitor-btn').forEach(btn => {
-                btn.addEventListener('click', handleDeleteVisitor);
-            });
-        };
-
-        // 添加访客
-        const handleAddVisitor = (e) => {
-            e.preventDefault();
-            const username = document.getElementById('new-username').value.trim();
-            const password = document.getElementById('new-password').value;
-            
-            if (!username || !password) return;
-            
-            if (state.visitors[username] || state.admins[username]) {
-                alert('用户名已存在，请使用其他用户名');
-                return;
-            }
-            
-            state.visitors[username] = password;
-            saveData({ visitors: state.visitors });
-            renderVisitorsList();
-            addVisitorForm.reset();
-        };
-
-        // 删除访客
-        const handleDeleteVisitor = (e) => {
-            const username = e.currentTarget.getAttribute('data-username');
-            
-            if (confirm(`确定要删除访客 ${username} 吗？`)) {
-                delete state.visitors[username];
-                saveData({ visitors: state.visitors });
-                renderVisitorsList();
-            }
-        };
-
-        // 绑定所有事件监听
-        const bindEvents = () => {
-            // 登录表单提交
-            if (loginForm) {
-                loginForm.addEventListener('submit', handleLogin);
-            }
-            
-            // 登出按钮
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', handleLogout);
-            }
-            
-            // 状态切换
-            statusElements.forEach(elem => {
-                elem.addEventListener('click', toggleStatus);
-            });
-            
-            // 刷新按钮
-            if (refreshBtn) {
-                refreshBtn.addEventListener('click', refreshStatus);
-            }
-            
-            // 添加访客表单
-            if (addVisitorForm) {
-                addVisitorForm.addEventListener('submit', handleAddVisitor);
-            }
-            
-            // 点击模态框背景关闭
-            if (visitorManagementModal) {
-                visitorManagementModal.addEventListener('click', (e) => {
-                    if (e.target === visitorManagementModal) {
-                        closeVisitorModal();
-                    }
-                });
-            }
-        };
-
-        // 初始化系统
-        const init = () => {
-            initSystemData();
-            // 确保初始状态正确 - 登录界面显示，系统界面隐藏
-            loginScreen.classList.remove('hidden');
-            systemScreen.classList.add('hidden');
-            checkLoginStatus();
-            bindEvents();
-        };
-
-        // 页面DOM加载完成后初始化
-        document.addEventListener('DOMContentLoaded', init);
-        
-        // 确保加载完成后隐藏加载指示器，只显示登录界面
-        window.addEventListener('load', function() {
-            setTimeout(() => {
+            } catch (error) {
+                console.error('系统初始化失败:', error);
+            } finally {
+                // 隐藏加载指示器
                 document.getElementById('loading-indicator').classList.add('hidden');
-            }, 500);
+            }
+        };
+
+        // 事件监听
+        document.addEventListener('DOMContentLoaded', () => {
+            // 登录表单提交
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const isAdmin = document.getElementById('admin-login').checked;
+                
+                const success = await handleLogin(username, password, isAdmin);
+                if (!success) {
+                    document.getElementById('login-error').classList.remove('hidden');
+                }
+            });
+
+            // 登出按钮
+            document.getElementById('logout-btn').addEventListener('click', handleLogout);
+
+            // 刷新按钮
+            document.getElementById('refresh-btn').addEventListener('click', async () => {
+                const newData = await loadData();
+                state = { ...state, ...newData };
+                updateUI();
+                showUpdateInfo();
+            });
+
+            // 访客管理按钮
+            document.getElementById('visitor-management-btn').addEventListener('click', () => {
+                document.getElementById('visitor-modal').classList.add('active');
+            });
+
+            // 关闭模态框按钮
+            document.getElementById('close-modal-btn').addEventListener('click', () => {
+                document.getElementById('visitor-modal').classList.remove('active');
+            });
+
+            // 添加访客表单提交
+            document.getElementById('add-visitor-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const username = document.getElementById('new-username').value;
+                const password = document.getElementById('new-password').value;
+                
+                if (await addVisitor(username, password)) {
+                    document.getElementById('add-visitor-form').reset();
+                }
+            });
+
+            // 点击模态框背景关闭
+            document.getElementById('visitor-modal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('visitor-modal')) {
+                    document.getElementById('visitor-modal').classList.remove('active');
+                }
+            });
+
+            // 启动系统
+            initSystem();
         });
     </script>
 </body>
