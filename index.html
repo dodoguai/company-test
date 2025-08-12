@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,329 +13,329 @@
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
         body {
             background-color: #f9fafb;
             color: #1e293b;
             min-height: 100vh;
             line-height: 1.5;
         }
-        
+
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .hidden {
             display: none !important;
         }
-        
+
         .flex {
             display: flex;
         }
-        
+
         .flex-col {
             flex-direction: column;
         }
-        
+
         .flex-row {
             flex-direction: row;
         }
-        
+
         .justify-between {
             justify-content: space-between;
         }
-        
+
         .justify-center {
             justify-content: center;
         }
-        
+
         .items-center {
             align-items: center;
         }
-        
+
         .items-end {
             align-items: flex-end;
         }
-        
+
         .flex-grow {
             flex-grow: 1;
         }
-        
+
         .flex-wrap {
             flex-wrap: wrap;
         }
-        
+
         .gap-3 {
             gap: 12px;
         }
-        
+
         .gap-4 {
             gap: 16px;
         }
-        
+
         .gap-5 {
             gap: 20px;
         }
-        
+
         .mt-1 {
             margin-top: 4px;
         }
-        
+
         .mt-3 {
             margin-top: 12px;
         }
-        
+
         .mt-4 {
             margin-top: 16px;
         }
-        
+
         .mt-6 {
             margin-top: 24px;
         }
-        
+
         .mt-8 {
             margin-top: 32px;
         }
-        
+
         .mt-10 {
             margin-top: 40px;
         }
-        
+
         .mb-3 {
             margin-bottom: 12px;
         }
-        
+
         .mb-4 {
             margin-bottom: 16px;
         }
-        
+
         .mb-6 {
             margin-bottom: 24px;
         }
-        
+
         .mb-8 {
             margin-bottom: 32px;
         }
-        
+
         .mb-10 {
             margin-bottom: 40px;
         }
-        
+
         .ml-4 {
             margin-left: 16px;
         }
-        
+
         .mr-1 {
             margin-right: 4px;
         }
-        
+
         .mr-2 {
             margin-right: 8px;
         }
-        
+
         .p-2 {
             padding: 8px;
         }
-        
+
         .p-3 {
             padding: 12px;
         }
-        
+
         .p-4 {
             padding: 16px;
         }
-        
+
         .p-5 {
             padding: 20px;
         }
-        
+
         .p-6 {
             padding: 24px;
         }
-        
+
         .px-3 {
             padding-left: 12px;
             padding-right: 12px;
         }
-        
+
         .px-4 {
             padding-left: 16px;
             padding-right: 16px;
         }
-        
+
         .px-5 {
             padding-left: 20px;
             padding-right: 20px;
         }
-        
+
         .py-1 {
             padding-top: 4px;
             padding-bottom: 4px;
         }
-        
+
         .py-2 {
             padding-top: 8px;
             padding-bottom: 8px;
         }
-        
+
         .py-6 {
             padding-top: 24px;
             padding-bottom: 24px;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .text-right {
             text-align: right;
         }
-        
+
         .w-full {
             width: 100%;
         }
-        
+
         .max-w-md {
             max-width: 28rem;
         }
-        
+
         .max-w-lg {
             max-width: 32rem;
         }
-        
+
         .max-h-60 {
             max-height: 240px;
         }
-        
+
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-        
+
         .bg-primary {
             background-color: #3b82f6;
         }
-        
+
         .bg-primary-light {
             background-color: rgba(59, 130, 246, 0.1);
         }
-        
+
         .bg-primary-hover {
             background-color: rgba(59, 130, 246, 0.2);
         }
-        
+
         .bg-secondary {
             background-color: #6366f1;
         }
-        
+
         .bg-success {
             background-color: #10b981;
         }
-        
+
         .bg-success-light {
             background-color: rgba(16, 185, 129, 0.1);
         }
-        
+
         .bg-danger {
             background-color: #ef4444;
         }
-        
+
         .bg-danger-light {
             background-color: rgba(239, 68, 68, 0.1);
         }
-        
+
         .bg-dark {
             background-color: #1e293b;
         }
-        
+
         .bg-white {
             background-color: white;
         }
-        
+
         .bg-gray-50 {
             background-color: #f9fafb;
         }
-        
+
         .bg-gray-100 {
             background-color: #f3f4f6;
         }
-        
+
         .bg-gray-200 {
             background-color: #e5e7eb;
         }
-        
+
         .bg-gray-700 {
             background-color: #374151;
         }
-        
+
         .text-white {
             color: white;
         }
-        
+
         .text-primary {
             color: #3b82f6;
         }
-        
+
         .text-success {
             color: #10b981;
         }
-        
+
         .text-danger {
             color: #ef4444;
         }
-        
+
         .text-gray-300 {
             color: #d1d5db;
         }
-        
+
         .text-gray-400 {
             color: #9ca3af;
         }
-        
+
         .text-gray-500 {
             color: #6b7280;
         }
-        
+
         .text-gray-700 {
             color: #374151;
         }
-        
+
         .text-gray-800 {
             color: #1f2937;
         }
-        
+
         .border {
             border-width: 1px;
             border-style: solid;
         }
-        
+
         .border-success {
             border-color: rgba(16, 185, 129, 0.2);
         }
-        
+
         .border-danger {
             border-color: rgba(239, 68, 68, 0.2);
         }
-        
+
         .border-gray-300 {
             border-color: #d1d5db;
         }
-        
+
         .border-t-4 {
             border-top-width: 4px;
             border-top-style: solid;
         }
-        
+
         .border-b {
             border-bottom-width: 1px;
             border-bottom-style: solid;
             border-bottom-color: #e5e7eb;
         }
-        
+
         .card {
             background-color: white;
             border-radius: 0.75rem;
@@ -342,19 +343,19 @@
             overflow: hidden;
             transition: all 0.3s ease;
         }
-        
+
         .card:hover {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             transform: translateY(-5px);
         }
-        
+
         .card-header {
             background: linear-gradient(to right, #3b82f6, #6366f1);
             color: white;
             padding: 20px;
             position: relative;
         }
-        
+
         .status-pill {
             padding: 8px 16px;
             border-radius: 9999px;
@@ -365,19 +366,19 @@
             transition: all 0.3s ease;
             width: 100%;
         }
-        
+
         .status-pill.present {
             background-color: rgba(16, 185, 129, 0.1);
             color: #10b981;
             border: 1px solid rgba(16, 185, 129, 0.2);
         }
-        
+
         .status-pill.absent {
             background-color: rgba(239, 68, 68, 0.1);
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
-        
+
         .status-indicator {
             position: absolute;
             top: 16px;
@@ -386,19 +387,20 @@
             height: 12px;
             border-radius: 9999px;
         }
-        
+
         .update-info {
             font-size: 0.75rem;
             color: #6b7280;
             margin-top: 12px;
             text-align: center;
-            display: block; /* 修改为默认显示 */
+            display: block;
+            /* 修改为默认显示 */
         }
-        
+
         .update-info.visible {
             display: block;
         }
-        
+
         .login-card {
             max-width: 28rem;
             margin-left: auto;
@@ -408,7 +410,7 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
+
         .modal-backdrop {
             position: fixed;
             top: 0;
@@ -424,12 +426,12 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .modal-backdrop.active {
             opacity: 1;
             display: flex;
         }
-        
+
         .modal {
             background-color: white;
             border-radius: 0.75rem;
@@ -440,12 +442,12 @@
             opacity: 0;
             transition: all 0.3s ease;
         }
-        
+
         .modal-backdrop.active .modal {
             transform: scale(1) translateY(0);
             opacity: 1;
         }
-        
+
         .btn {
             padding: 8px 16px;
             border-radius: 0.5rem;
@@ -455,196 +457,201 @@
             font-size: 1rem;
             cursor: pointer;
         }
-        
+
         .btn-primary {
             background-color: #3b82f6;
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: rgba(59, 130, 246, 0.9);
         }
-        
+
         .btn-danger {
             background-color: #ef4444;
             color: white;
         }
-        
+
         .btn-danger:hover {
             background-color: rgba(239, 68, 68, 0.9);
         }
-        
+
         .btn-secondary {
             background-color: #e5e7eb;
             color: #1f2937;
         }
-        
+
         .btn-secondary:hover {
             background-color: #d1d5db;
         }
-        
+
         .text-xs {
             font-size: 0.75rem;
         }
-        
+
         .text-sm {
             font-size: 0.875rem;
         }
-        
+
         .text-base {
             font-size: 1rem;
         }
-        
+
         .text-lg {
             font-size: 1.125rem;
         }
-        
+
         .text-xl {
             font-size: 1.25rem;
         }
-        
+
         .text-2xl {
             font-size: 1.5rem;
         }
-        
+
         .font-bold {
             font-weight: 700;
         }
-        
+
         .font-semibold {
             font-weight: 600;
         }
-        
+
         .font-medium {
             font-weight: 500;
         }
-        
+
         .animate-spin {
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         .shadow-md {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        
+
         .shadow-lg {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .shadow-xl {
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        
+
         .shadow-2xl {
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
-        
+
         .rounded-lg {
             border-radius: 0.5rem;
         }
-        
+
         .rounded-xl {
             border-radius: 0.75rem;
         }
-        
+
         .rounded-2xl {
             border-radius: 1rem;
         }
-        
+
         .rounded-full {
             border-radius: 9999px;
         }
-        
+
         .rounded-b-xl {
             border-bottom-right-radius: 0.75rem;
             border-bottom-left-radius: 0.75rem;
         }
-        
+
         .overflow-hidden {
             overflow: hidden;
         }
-        
+
         .overflow-y-auto {
             overflow-y: auto;
         }
-        
+
         .relative {
             position: relative;
         }
-        
+
         .absolute {
             position: absolute;
         }
-        
+
         .fixed {
             position: fixed;
         }
-        
+
         .inset-0 {
             top: 0;
             right: 0;
             bottom: 0;
             left: 0;
         }
-        
+
         .z-50 {
             z-index: 50;
         }
-        
+
         .z-100 {
             z-index: 100;
         }
-        
+
         .z-500 {
             z-index: 500;
         }
-        
+
         .h-full {
             height: 100%;
         }
-        
+
         .hover\:bg-primary-90:hover {
             background-color: rgba(59, 130, 246, 0.9);
         }
-        
+
         .hover\:bg-danger-90:hover {
             background-color: rgba(239, 68, 68, 0.9);
         }
-        
+
         .hover\:bg-gray-600:hover {
             background-color: #4b5563;
         }
-        
+
         .hover\:bg-gray-300:hover {
             background-color: #d1d5db;
         }
-        
+
         .hover\:text-danger-80:hover {
             color: rgba(239, 68, 68, 0.8);
         }
-        
+
         .focus\:ring-2:focus {
             outline: none;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
         }
-        
+
         .focus\:border-primary:focus {
             border-color: #3b82f6;
         }
-        
+
         .transition {
             transition: all 0.2s ease;
         }
-        
+
         .transition-colors {
             transition: background-color 0.2s ease;
         }
-        
+
         .transition-all {
             transition: all 0.2s ease;
         }
@@ -654,6 +661,7 @@
     <!-- 引入包含LiveQuery的LeanCloud SDK -->
     <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.0/dist/av-live-query.min.js"></script>
 </head>
+
 <body class="bg-gray-50 min-h-screen">
     <!-- 加载状态指示器 -->
     <div id="loading-indicator" class="fixed inset-0 z-500 flex items-center justify-center bg-white">
@@ -664,7 +672,8 @@
     </div>
 
     <!-- 登录界面 (默认显示) -->
-    <div id="login-screen" class="fixed inset-0 bg-gradient-to-br from-primary to-secondary flex items-center justify-center z-50 p-4">
+    <div id="login-screen"
+        class="fixed inset-0 bg-gradient-to-br from-primary to-secondary flex items-center justify-center z-50 p-4">
         <div class="login-card w-full">
             <div class="bg-dark p-6 text-center">
                 <h2 class="text-2xl font-bold text-white">人员与印章状态</h2>
@@ -691,7 +700,7 @@
                     <div class="text-red-500 text-sm hidden" id="login-error">
                         用户名或密码错误，请重试
                     </div>
-                    <button type="submit" 
+                    <button type="submit"
                         class="w-full bg-primary hover:bg-primary-90 text-white py-2 px-4 rounded-lg transition-colors font-medium">
                         登录
                     </button>
@@ -722,11 +731,13 @@
                             <span id="last-update">最后更新: 14:30</span>
                         </div>
                         <div id="admin-controls">
-                            <button id="visitor-management-btn" class="bg-primary-light hover:bg-primary-hover text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                            <button id="visitor-management-btn"
+                                class="bg-primary-light hover:bg-primary-hover text-white px-3 py-1 rounded-lg text-sm transition-colors">
                                 <i class="fa fa-users mr-1"></i> 访客管理
                             </button>
                         </div>
-                        <button id="logout-btn" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
+                        <button id="logout-btn"
+                            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-lg text-sm transition-colors">
                             <i class="fa fa-sign-out mr-1"></i> 退出
                         </button>
                     </div>
@@ -737,7 +748,8 @@
         <main class="container mx-auto px-4 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="flex gap-3 mt-4 md:mt-0">
-                    <button id="refresh-btn" class="bg-primary hover:bg-primary-90 text-white px-5 py-2 rounded-lg transition-all duration-300 flex items-center shadow-md hover:shadow-lg">
+                    <button id="refresh-btn"
+                        class="bg-primary hover:bg-primary-90 text-white px-5 py-2 rounded-lg transition-all duration-300 flex items-center shadow-md hover:shadow-lg">
                         <i class="fa fa-refresh mr-2"></i> 刷新
                     </button>
                 </div>
@@ -767,12 +779,14 @@
                     <form id="add-visitor-form" class="space-y-4">
                         <div class="flex gap-4">
                             <div class="flex-1">
-                                <label for="new-username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+                                <label for="new-username"
+                                    class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
                                 <input type="text" id="new-username" required
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
                             </div>
                             <div class="flex-1">
-                                <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                                <label for="new-password"
+                                    class="block text-sm font-medium text-gray-700 mb-1">密码</label>
                                 <input type="password" id="new-password" required
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition">
                             </div>
@@ -785,7 +799,8 @@
 
                 <div>
                     <h4 class="font-semibold mb-3">现有访客</h4>
-                    <div id="visitors-list" class="space-y-2 max-h-60 overflow-y-auto p-2 border border-gray-300 rounded-lg">
+                    <div id="visitors-list"
+                        class="space-y-2 max-h-60 overflow-y-auto p-2 border border-gray-300 rounded-lg">
                         <!-- 访客列表将通过JS动态生成 -->
                     </div>
                 </div>
@@ -816,21 +831,20 @@
 
         // 创建数据表引用
         const SharedData = AV.Object.extend('SharedData');
-
+        // 在初始化LeanCloud之后添加
+        const UserData = AV.Object.extend('UserData');
         // 从云端加载数据
         const loadData = async () => {
             try {
                 const query = new AV.Query(SharedData);
                 query.limit(1);
                 const results = await query.find();
-                
+
                 if (results.length > 0) {
                     return JSON.parse(results[0].get('data') || '{}');
                 } else {
                     // 初始化默认数据 - 已更新人员和印章信息
                     const defaultData = {
-                        admins: { 'ld': '19990519', 'jyf': 'jyf123456' },
-                        visitors: { 'visitor1': '123456', 'visitor2': '654321' },
                         leaders: {
                             'leader1': { name: '王董', position: '董事长', status: 'present', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
                             'leader2': { name: '张总经理', position: '总经理', status: 'absent', updatedAt: new Date().toLocaleString(), updatedBy: '系统' },
@@ -847,7 +861,7 @@
                         currentUser: null,
                         userRole: null
                     };
-                    
+
                     const newData = new SharedData();
                     newData.set('data', JSON.stringify(defaultData));
                     await newData.save();
@@ -859,13 +873,44 @@
                 return {};
             }
         };
+        const getCurrentUser = () => {
+            // 从localStorage获取当前用户
+            const userData = localStorage.getItem('userData');
+            console.log('userData: ', userData);
 
+            if (userData) {
+                return JSON.parse(userData).currentUser;
+            }
+            return '未知用户'; // 默认值
+        };
+        const updateLeader = async (id, updatedData) => {
+            try {
+                const query = new AV.Query('SharedData');
+                query.equalTo('objectId', id);
+                const result = await query.first();
+
+                if (result) {
+                    // 添加更新人信息
+                    updatedData.updatedBy = getCurrentUser();
+                    // 添加更新时间
+                    updatedData.updatedAt = new Date().toLocaleString();
+
+                    result.set('leaders', updatedData);
+                    await result.save();
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('更新领导信息失败:', error);
+                return false;
+            }
+        };
         // 保存数据到云端
         const saveData = async (newData) => {
             try {
                 const query = new AV.Query(SharedData);
                 const results = await query.find();
-                
+
                 if (results.length > 0) {
                     const dataObject = results[0];
                     const currentData = JSON.parse(dataObject.get('data') || '{}');
@@ -916,6 +961,19 @@
             renderSeals();
             // 更新访客列表
             renderVisitors();
+            //     const leadersContainer = document.getElementById('leaders-container');
+            // leadersContainer.innerHTML = '';
+            // Object.keys(state.leaders).forEach(id => {
+            //     const leader = state.leaders[id];
+            //     leadersContainer.innerHTML += `
+            //         <div class="leader-item">
+            //             <h3>${leader.name}</h3>
+            //             <p>更新人: ${leader.updatedBy || '未知用户'}</p>
+            //             <p>更新时间: ${leader.updatedAt || '未知时间'}</p>
+            //             <!-- 其他内容 -->
+            //         </div>
+            //     `;
+            // });
             // 更新用户信息
             if (state.currentUser) {
                 document.getElementById('current-user').textContent = state.currentUser;
@@ -924,12 +982,44 @@
             // 更新最后更新时间
             document.getElementById('last-update').textContent = `最后更新: ${new Date().toLocaleTimeString()}`;
         };
+        // 在loadData函数后添加初始化用户数据的函数
+        const initUserData = async () => {
+            const query = new AV.Query(UserData);
+            const count = await query.count();
 
+            if (count === 0) {
+                // 添加默认管理员
+                const admin1 = new UserData();
+                admin1.set('username', 'ld');
+                admin1.set('password', '19990519');
+                admin1.set('role', 'admin');
+                await admin1.save();
+
+                const admin2 = new UserData();
+                admin2.set('username', 'jyf');
+                admin2.set('password', 'jyf123456');
+                admin2.set('role', 'admin');
+                await admin2.save();
+
+                // 添加默认访客
+                const visitor1 = new UserData();
+                visitor1.set('username', 'visitor1');
+                visitor1.set('password', '123456');
+                visitor1.set('role', 'visitor');
+                await visitor1.save();
+
+                const visitor2 = new UserData();
+                visitor2.set('username', 'visitor2');
+                visitor2.set('password', '654321');
+                visitor2.set('role', 'visitor');
+                await visitor2.save();
+            }
+        };
         // 渲染领导卡片 - 已修改状态文字并添加更新人和时间
         const renderLeaders = () => {
             const container = document.getElementById('leaders-container');
             container.innerHTML = '';
-            
+
             Object.keys(state.leaders).forEach(id => {
                 const leader = state.leaders[id];
                 const card = document.createElement('div');
@@ -965,7 +1055,7 @@
         const renderSeals = () => {
             const container = document.getElementById('seals-container');
             container.innerHTML = '';
-            
+
             Object.keys(state.seals).forEach(id => {
                 const seal = state.seals[id];
                 const card = document.createElement('div');
@@ -996,12 +1086,36 @@
                 pill.addEventListener('click', toggleSealStatus);
             });
         };
+        const addSeal = async (sealData) => {
+            try {
+                // 获取当前数据
+                const query = new AV.Query('SharedData');
+                const result = await query.first();
 
+                if (result) {
+                    const seals = result.get('seals') || {};
+                    const newId = `seal_${Date.now()}`;
+
+                    // 添加创建人信息
+                    sealData.createdBy = getCurrentUser();
+                    sealData.createdAt = new Date().toLocaleString();
+
+                    seals[newId] = sealData;
+                    result.set('seals', seals);
+                    await result.save();
+                    return newId;
+                }
+                return null;
+            } catch (error) {
+                console.error('添加印章失败:', error);
+                return null;
+            }
+        };
         // 渲染访客列表
         const renderVisitors = () => {
             const container = document.getElementById('visitors-list');
             container.innerHTML = '';
-            
+
             Object.keys(state.visitors).forEach(username => {
                 const visitorItem = document.createElement('div');
                 visitorItem.className = 'flex justify-between items-center p-2 hover:bg-gray-100 rounded-lg';
@@ -1024,16 +1138,17 @@
         const toggleLeaderStatus = async (e) => {
             const id = e.currentTarget.dataset.id;
             const currentStatus = state.leaders[id].status;
+            console.log('state: ', state);
             const newStatus = currentStatus === 'present' ? 'absent' : 'present';
-            
+
             // 更新本地状态，记录当前操作用户
             state.leaders[id] = {
                 ...state.leaders[id],
                 status: newStatus,
                 updatedAt: new Date().toLocaleString(),
-                updatedBy: state.currentUser || '未知用户'
+                updatedBy: getCurrentUser() || '未知用户'
             };
-            
+
             // 保存到云端
             await saveData({ leaders: state.leaders });
         };
@@ -1043,15 +1158,15 @@
             const id = e.currentTarget.dataset.id;
             const currentStatus = state.seals[id].status;
             const newStatus = currentStatus === 'present' ? 'absent' : 'present';
-            
+
             // 更新本地状态，记录当前操作用户
             state.seals[id] = {
                 ...state.seals[id],
                 status: newStatus,
                 updatedAt: new Date().toLocaleString(),
-                updatedBy: state.currentUser || '未知用户'
+                updatedBy: getCurrentUser() || '未知用户'
             };
-            
+
             // 保存到云端
             await saveData({ seals: state.seals });
         };
@@ -1059,16 +1174,16 @@
         // 添加新访客
         const addVisitor = async (username, password) => {
             if (!username || !password) return false;
-            
+
             // 检查用户名是否已存在
             if (state.visitors[username]) {
                 alert('该用户名已存在');
                 return false;
             }
-            
+
             // 更新本地状态
             state.visitors[username] = password;
-            
+
             // 保存到云端
             await saveData({ visitors: state.visitors });
             return true;
@@ -1078,10 +1193,10 @@
         const deleteVisitor = async (e) => {
             const username = e.currentTarget.dataset.username;
             if (!confirm(`确定要删除访客 ${username} 吗？`)) return;
-            
+
             // 更新本地状态
             delete state.visitors[username];
-            
+
             // 保存到云端
             await saveData({ visitors: state.visitors });
         };
@@ -1090,29 +1205,47 @@
         const showUpdateInfo = () => {
             const allUpdates = document.querySelectorAll('.update-info');
             allUpdates.forEach(el => el.classList.add('visible'));
-            
+
             // 3秒后隐藏提示
             setTimeout(() => {
                 allUpdates.forEach(el => el.classList.remove('visible'));
             }, 3000);
         };
 
+
         // 登录处理
+        // 替换原handleLogin函数
         const handleLogin = async (username, password, isAdmin) => {
-            const targetUsers = isAdmin ? state.admins : state.visitors;
-            if (targetUsers[username] === password) {
-                // 登录成功，更新用户状态
-                await saveData({
-                    currentUser: username,
-                    userRole: isAdmin ? 'admin' : 'visitor'
-                });
-                
-                // 切换界面
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('system-screen').classList.remove('hidden');
-                return true;
+            try {
+                const query = new AV.Query(UserData);
+                query.equalTo('username', username);
+                query.equalTo('role', isAdmin ? 'admin' : 'visitor');
+                const results = await query.find();
+                console.log('登陆了');
+                if (results.length > 0) {
+                    const user = results[0];
+                    if (user.get('password') === password) {
+                        // 登录成功处理
+                        const userData = {
+                            currentUser: username,
+                            userRole: isAdmin ? 'admin' : 'visitor'
+                        };
+                        localStorage.setItem('userData', JSON.stringify(userData));
+
+                        state.currentUser = username;
+                        state.userRole = isAdmin ? 'admin' : 'visitor';
+
+                        document.getElementById('login-screen').classList.add('hidden');
+                        document.getElementById('system-screen').classList.remove('hidden');
+                        updateUI();
+                        return true;
+                    }
+                }
+                return false;
+            } catch (error) {
+                console.error('登录验证失败:', error);
+                return false;
             }
-            return false;
         };
 
         // 登出处理
@@ -1121,7 +1254,7 @@
                 currentUser: null,
                 userRole: null
             });
-            
+
             // 切换界面
             document.getElementById('system-screen').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
@@ -1143,16 +1276,16 @@
                 // 加载数据
                 const cloudData = await loadData();
                 state = { ...state, ...cloudData };
-                
+
                 // 初始化LiveQuery
                 initLiveQuery();
-                
+
                 // 初始化日期显示
                 initDateDisplay();
-                
+
                 // 更新UI
                 updateUI();
-                
+
                 // 如果已有登录状态，直接进入系统
                 if (state.currentUser) {
                     document.getElementById('login-screen').classList.add('hidden');
@@ -1167,20 +1300,20 @@
         };
 
         // 事件监听
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // 登录表单提交
             document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 const isAdmin = document.getElementById('admin-login').checked;
-                
+
                 const success = await handleLogin(username, password, isAdmin);
                 if (!success) {
                     document.getElementById('login-error').classList.remove('hidden');
                 }
             });
-
+            await initUserData(); // 添加这行
             // 登出按钮
             document.getElementById('logout-btn').addEventListener('click', handleLogout);
 
@@ -1207,7 +1340,7 @@
                 e.preventDefault();
                 const username = document.getElementById('new-username').value;
                 const password = document.getElementById('new-password').value;
-                
+
                 if (await addVisitor(username, password)) {
                     document.getElementById('add-visitor-form').reset();
                 }
@@ -1225,5 +1358,5 @@
         });
     </script>
 </body>
+
 </html>
-    
