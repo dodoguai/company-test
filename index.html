@@ -873,6 +873,29 @@
                 return {};
             }
         };
+        // 加载所有访客数据
+        const loadVisitors = async () => {
+            try {
+                const query = new AV.Query(UserData);
+                query.equalTo('role', 'visitor'); // 只查询访客角色
+                const results = await query.find();
+
+                const visitors = {};
+                results.forEach(user => {
+                    const username = user.get('username');
+                    visitors[username] = {
+                        username: username,
+                        createdAt: user.createdAt.toLocaleString()
+                    };
+                });
+
+                state.visitors = visitors; // 更新全局状态
+                renderVisitors(); // 重新渲染访客列表
+            } catch (error) {
+                console.error('加载访客数据失败:', error);
+                alert(`加载访客列表失败: ${error.message}`);
+            }
+        };
         const getCurrentUser = () => {
             // 从localStorage获取当前用户
             const userData = localStorage.getItem('userData');
@@ -1172,33 +1195,65 @@
         };
 
         // 添加新访客
+        // 假设管理员新增访客的函数是addVisitor，修改如下
         const addVisitor = async (username, password) => {
-            if (!username || !password) return false;
+            try {
+                // 1. 验证输入（避免空值或空格问题）
+                if (!username.trim() || !password.trim()) {
+                    alert('用户名和密码不能为空！');
+                    return false;
+                }
 
-            // 检查用户名是否已存在
-            if (state.visitors[username]) {
-                alert('该用户名已存在');
+                // 2. 检查用户名是否已存在（避免重复）
+                const query = new AV.Query(UserData);
+                query.equalTo('username', username.trim());
+                const existingUser = await query.first();
+                if (existingUser) {
+                    alert('该用户名已存在！');
+                    return false;
+                }
+
+                // 3. 正确创建访客用户，角色必须为'visitor'（注意拼写）
+                const newVisitor = new UserData();
+                newVisitor.set('username', username.trim()); // 去除空格
+                newVisitor.set('password', password.trim()); // 去除空格
+                newVisitor.set('role', 'visitor'); // 确保角色正确
+
+                // 4. 保存到LeanCloud
+                await newVisitor.save();
+                alert('访客添加成功！');
+                return true;
+
+            } catch (error) {
+                console.error('新增访客失败:', error);
+                alert('添加失败，请重试！');
                 return false;
             }
-
-            // 更新本地状态
-            state.visitors[username] = password;
-
-            // 保存到云端
-            await saveData({ visitors: state.visitors });
-            return true;
         };
+
 
         // 删除访客
         const deleteVisitor = async (e) => {
             const username = e.currentTarget.dataset.username;
-            if (!confirm(`确定要删除访客 ${username} 吗？`)) return;
+            if (!confirm(`确定要删除访客 ${username} 吗？`)) {
+                return;
+            }
 
-            // 更新本地状态
-            delete state.visitors[username];
+            try {
+                const query = new AV.Query(UserData);
+                query.equalTo('username', username);
+                query.equalTo('role', 'visitor');
+                const user = await query.first();
 
-            // 保存到云端
-            await saveData({ visitors: state.visitors });
+                if (user) {
+                    await user.destroy(); // 从数据库删除
+                    await loadVisitors(); // 重新加载列表
+                    alert('访客已删除');
+                }
+            } catch (error) {
+                console.error('删除访客失败:', error);
+                alert(`删除失败: ${error.message}`);
+            }
         };
 
         // 显示更新提示
@@ -1217,33 +1272,53 @@
         // 替换原handleLogin函数
         const handleLogin = async (username, password, isAdmin) => {
             try {
+                // 1. 处理输入（去除空格，避免前后空格导致匹配失败）
+                const inputUsername = username.trim();
+                const inputPassword = password.trim();
+
+                // 2. 明确查询条件：角色必须匹配（管理员/访客）
                 const query = new AV.Query(UserData);
-                query.equalTo('username', username);
-                query.equalTo('role', isAdmin ? 'admin' : 'visitor');
+                query.equalTo('username', inputUsername);
+                query.equalTo('role', isAdmin ? 'admin' : 'visitor'); // 确保角色匹配
+                console.log('登录查询条件:', {
+                    username: inputUsername,
+                    role: isAdmin ? 'admin' : 'visitor'
+                });
+
+                // 3. 执行查询
                 const results = await query.find();
-                console.log('登陆了');
+                console.log('查询到的用户:', results);
+
+                // 4. 验证密码
                 if (results.length > 0) {
                     const user = results[0];
-                    if (user.get('password') === password) {
-                        // 登录成功处理
+                    if (user.get('password') === inputPassword) {
+                        // 登录成功（原有逻辑保持不变）
                         const userData = {
-                            currentUser: username,
+                            currentUser: inputUsername,
                             userRole: isAdmin ? 'admin' : 'visitor'
                         };
                         localStorage.setItem('userData', JSON.stringify(userData));
-
-                        state.currentUser = username;
+                        state.currentUser = inputUsername;
                         state.userRole = isAdmin ? 'admin' : 'visitor';
-
                         document.getElementById('login-screen').classList.add('hidden');
                         document.getElementById('system-screen').classList.remove('hidden');
                         updateUI();
                         return true;
+                    } else {
+                        console.log('密码不匹配:', user.get('password'), 'vs', inputPassword);
+                        alert('密码不正确！');
+                        return false;
                     }
+                } else {
+                    console.log('未查询到用户，用户名或角色不匹配');
+                    alert('用户名或密码不正确！');
+                    return false;
                 }
-                return false;
+
             } catch (error) {
                 console.error('登录验证失败:', error);
+                alert('登录失败，请重试！');
                 return false;
             }
         };
@@ -1270,26 +1345,125 @@
             document.getElementById('current-date').textContent = now.toLocaleDateString('zh-CN', options);
         };
 
+        async function handleAddVisitor() {
+            // 步骤1：获取输入值并验证
+            // const usernameInput = document.getElementById('username');
+            // console.log('usernameInput: ', usernameInput);
+            // const passwordInput = document.getElementById('password');
+            // console.log('passwordInput: ', passwordInput);
+
+            // if (!usernameInput || !passwordInput) {
+            //     console.error('未找到用户名/密码输入框');
+            //     alert('页面元素缺失，请刷新重试');
+            //     return;
+            // }
+
+            // const username = usernameInput.value.trim();
+            // console.log('username: ', username);
+            // const password = passwordInput.value.trim();
+            // console.log('password: ', password);
+
+            // // 输出调试信息：输入值检查
+            // console.log('访客添加输入值:', { username, password, isEmpty: !username || !password });
+
+            // if (!username || !password) {
+            //     alert('用户名和密码不能为空！');
+            //     return;
+            // }
+
+            // try {
+            //     // 步骤2：检查用户名是否已存在（关键排查点）
+            //     const query = new AV.Query(UserData);
+            //     query.equalTo('username', username);
+            //     const existingUser = await query.first();
+
+            //     // 输出调试信息：重复检查结果
+            //     console.log('用户名重复检查:', { existingUser: !!existingUser });
+
+            //     if (existingUser) {
+            //         alert(`用户名 "${username}" 已存在，请更换`);
+            //         return;
+            //     }
+
+            //     // 步骤3：创建并保存新访客（关键排查点）
+            //     const newVisitor = new UserData();
+            //     newVisitor.set('username', username);
+            //     newVisitor.set('password', password);
+            //     newVisitor.set('role', 'visitor'); // 强制设置为访客角色
+
+            //     // 输出调试信息：准备保存的数据
+            //     console.log('准备保存的访客数据:', {
+            //         username,
+            //         password: '******', // 密码脱敏
+            //         role: 'visitor'
+            //     });
+
+            //     // 执行保存
+            //     // const savedVisitor = await newVisitor.save();
+
+            //     // 输出调试信息：保存结果
+            //     // console.log('访客保存成功:', {
+            //     //     id: savedVisitor.id,
+            //     //     createdAt: savedVisitor.createdAt
+            //     // });
+
+            //     // // 步骤4：保存成功后处理
+            //     // alert(`访客 "${username}" 添加成功！`);
+            //     // // 清空输入框
+            //     // usernameInput.value = '';
+            //     // passwordInput.value = '';
+            //     // // 重新加载访客列表（关键：确保新添加的访客显示）
+            //     // loadVisitors();
+
+            // } catch (error) {
+            //     // 步骤5：详细错误处理（关键排查点）
+            //     console.error('访客添加失败:', {
+            //         message: error.message,
+            //         code: error.code, // LeanCloud错误码
+            //         stack: error.stack
+            //     });
+
+            //     // 根据错误码提示具体原因
+            //     const errorTips = {
+            //         101: '数据保存失败，请检查网络',
+            //         403: '没有权限添加访客，请确认管理员身份',
+            //         404: 'UserData类不存在，请先初始化数据'
+            //     };
+            //     alert(`添加失败: ${errorTips[error.code] || error.message}`);
+            // }
+            console.log('您吉祥')
+        }
+
         // 系统初始化
         const initSystem = async () => {
             try {
-                // 加载数据
-                const cloudData = await loadData();
-                state = { ...state, ...cloudData };
+                document.getElementById('loading-indicator').classList.add('hidden');
 
-                // 初始化LiveQuery
+                // 加载主数据
+                const data = await loadData();
+                state = { ...state, ...data };
+
+                // 初始化用户数据（如果需要）
+                await initUserData();
+
+                // 加载访客数据（关键添加）
+                await loadVisitors();
+
+                // 初始化实时查询
                 initLiveQuery();
-
-                // 初始化日期显示
-                initDateDisplay();
 
                 // 更新UI
                 updateUI();
 
-                // 如果已有登录状态，直接进入系统
-                if (state.currentUser) {
+                // 检查本地存储的登录状态
+                const savedUser = localStorage.getItem('userData');
+                if (savedUser) {
+                    const { currentUser, userRole } = JSON.parse(savedUser);
+                    state.currentUser = currentUser;
+                    state.userRole = userRole;
                     document.getElementById('login-screen').classList.add('hidden');
                     document.getElementById('system-screen').classList.remove('hidden');
+                    updateUI();
                 }
             } catch (error) {
                 console.error('系统初始化失败:', error);
@@ -1301,6 +1475,36 @@
 
         // 事件监听
         document.addEventListener('DOMContentLoaded', async () => {
+
+            const addForm = document.getElementById('add-visitor-form');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const addBtn = document.getElementById('add-visitor-btn');
+
+            // 输出调试信息：检查元素是否存在
+            console.log('添加访客表单元素检查:', {
+                addFormExists: !!addForm,
+                usernameInputExists: !!usernameInput,
+                passwordInputExists: !!passwordInput,
+                addBtnExists: !!addBtn
+            });
+
+            // 绑定表单提交事件（优先用表单提交，避免按钮单独绑定的问题）
+            if (addForm) {
+                addForm.addEventListener('submit', async function (e) {
+                    e.preventDefault(); // 阻止默认提交行为
+                    await handleAddVisitor(); // 处理添加逻辑
+                });
+            } else {
+                console.error('未找到添加访客的表单（ID: add-visitor-form），请检查HTML');
+            }
+
+            // 兼容按钮点击事件（双重保障）
+            if (addBtn) {
+                addBtn.addEventListener('click', async function () {
+                    await handleAddVisitor();
+                });
+            }
             // 登录表单提交
             document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1337,12 +1541,42 @@
 
             // 添加访客表单提交
             document.getElementById('add-visitor-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const username = document.getElementById('new-username').value;
-                const password = document.getElementById('new-password').value;
+                const username = document.getElementById('new-username').value.trim();
+                const password = document.getElementById('new-password').value.trim();
 
-                if (await addVisitor(username, password)) {
+                if (!username || !password) {
+                    alert('用户名和密码不能为空');
+                    return;
+                }
+
+                try {
+                    // 检查用户名是否已存在
+                    const query = new AV.Query(UserData);
+                    query.equalTo('username', username);
+                    const existingUser = await query.first();
+
+                    if (existingUser) {
+                        alert('该用户名已存在，请更换');
+                        return;
+                    }
+
+                    // 创建新访客
+                    const newVisitor = new UserData();
+                    newVisitor.set('username', username);
+                    newVisitor.set('password', password);
+                    newVisitor.set('role', 'visitor');
+                    await newVisitor.save();
+
+                    // 清空表单
                     document.getElementById('add-visitor-form').reset();
+
+                    // 重新加载访客列表
+                    loadVisitors();
+
+                    alert('访客添加成功');
+                } catch (error) {
+                    console.error('添加访客失败:', error);
+                    alert(`添加失败: ${error.message}`);
                 }
             });
 
